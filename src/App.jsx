@@ -15,11 +15,11 @@ export default function App() {
       <div className={`main-layout ${route === "homepage" ? "homepage" : ""}`}>
         {route === "homepage" ? (
           <>
-            <div className="chat-panel">
-              <Chat />
-            </div>
             <div className="timer-panel">
               <Timer />
+            </div>
+            <div className="chat-panel">
+              <Chat />
             </div>
           </>
         ) : (
