@@ -382,29 +382,6 @@ export default function Timer() {
         </div>
       </div>
 
-      <div className="circle-wrapper">
-        <svg className="progress-ring" width="260" height="260">
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#00e0ff" />
-              <stop offset="100%" stopColor="#c8f560" />
-            </linearGradient>
-          </defs>
-
-          <circle className="progress-ring__background" cx="130" cy="130" r="115" />
-          <circle
-            className="progress-ring__circle"
-            cx="130"
-            cy="130"
-            r="115"
-            style={{
-              strokeDashoffset: `${(2 * Math.PI * 115 * (100 - percentage)) / 100}`,
-            }}
-          />
-        </svg>
-        <div className="time-text">{formatTime(time)}</div>
-      </div>
-
       <div className="button-group" style={{ marginTop: 16 }}>
         <button className="btn start" onClick={startTimer} disabled={isActive}>
           Start
