@@ -114,3 +114,11 @@ app.post("/api/groq-chat", async (req, res) => {
     });
   }
 });
+
+// -------------------
+// Start server
+// -------------------
+const SERVER_PORT = 4000;
+app.listen(SERVER_PORT, () => {
+  console.log(`Backend running on http://localhost:${SERVER_PORT}`);
+});
