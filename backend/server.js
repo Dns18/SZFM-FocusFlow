@@ -30,17 +30,6 @@ app.post("/api/chat", async (req, res) => {
     return res.json({ reply: "Nincs kiválasztott tantárgy. Válaszd ki a 'Mit szeretnél tanulni?' mezőben." });
   }
 
-  // egyszerű off-topic előszűrés (opcionális)
-  const forbiddenKeywords = ["politika", "sport", "recept", "bulvár", "időjárás", "szórakozás"];
-  const lower = userMessage.toLowerCase();
-  for (const k of forbiddenKeywords) {
-    if (lower.includes(k)) {
-      return res.json({
-        reply: `Ez nem kapcsolódik a kiválasztott tantárgyhoz (${topic}). Kérlek, tegyél fel kérdést a témával kapcsolatban.`,
-      });
-    }
-  }
-
   // Rendszer prompt: kötelezően a kiválasztott témára korlátoz
   const systemPrompt = `
 Te egy magyar nyelvű AI tanulási tutor vagy.
