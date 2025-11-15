@@ -10,7 +10,7 @@ console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY ? "SET" : "MISSING");
 const OpenAI = require("openai");
 
 // === Groq SDK ===
-const Groq = require("groq-sdk");
+ const Groq = require("groq-sdk");
 
 const app = express();
 app.use(cors());
@@ -68,7 +68,7 @@ app.post("/api/openai-chat", async (req, res) => {
     console.log("OpenAI reply:", reply);
     return res.json({ reply });
   } catch (err) {
-    console.error("OpenAI error:", err?.response?.data || err.message);
+    console.error("OpenAI full error:", err);
     return res.json({
       reply:
         "⚠️ Hiba történt az OpenAI hívás közben. (Részletek a szerver logban.)",
@@ -120,7 +120,7 @@ app.post("/api/groq-chat", async (req, res) => {
 // -------------------
 // Start server
 // -------------------
-const SERVER_PORT = 4000;
+const SERVER_PORT = process.env.PORT || 4000;
 app.listen(SERVER_PORT, () => {
   console.log(`Backend running on http://localhost:${SERVER_PORT}`);
 });
