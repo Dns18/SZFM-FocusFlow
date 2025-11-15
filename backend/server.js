@@ -75,3 +75,44 @@ app.post("/api/openai-chat", async (req, res) => {
     });
   }
 });
+
+// -------------------
+// Groq chat endpoint
+// -------------------
+app.post("/api/groq-chat", async (req, res) => {
+  const userMessage = req.body?.message || "";
+
+  if (!userMessage) {
+    return res.json({ reply: "Nem kaptam üzenetet a kérésben." });
+  }
+
+  try {
+    const groqResponse = await groqClient.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [
+        {
+          role: "system",
+          content:
+            "Te egy barátságos és érthető magyar AI tutor vagy, mindig segítőkész vagy, de mindig visszaterled a témát a tanulásra.",
+        },
+        {
+          role: "user",
+          content: userMessage,
+        },
+      ],
+    });
+
+    const reply =
+      groqResponse.choices?.[0]?.message?.content ||
+      "Üres válasz érkezett a Groq modelltől.";
+
+    console.log("Groq reply:", reply);
+    return res.json({ reply });
+  } catch (err) {
+    console.error("Groq API error:", err.message);
+    return res.json({
+      reply:
+        "⚠️ Hiba történt a Groq AI hívás közben. (Részletek a szerver konzolon.)",
+    });
+  }
+});
