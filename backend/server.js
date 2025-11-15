@@ -20,3 +20,8 @@ app.use(express.json());
 const openaiClient = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Groq Client
+const groqClient = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
