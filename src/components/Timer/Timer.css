@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: rgba(255, 255, 255, 0.90);
   text-align: center;
 }
 
@@ -17,8 +17,11 @@
 }
 
 .circle-wrapper {
+  margin-top: 50px;
   position: relative;
   display: inline-block;
+  border-radius: 100%;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.089);
 }
 
 .progress-ring__background {
@@ -42,11 +45,12 @@
 .progress-ring {
   position: relative;
 }
-.progress-ring defs linearGradient stop:first-child {
-  stop-color: #00e0ff;
-}
+
 .progress-ring defs linearGradient stop:last-child {
-  stop-color: #c8f560;
+  stop-color: #33e60f;
+}
+.progress-ring defs linearGradient stop:nth-child(1) {
+  stop-color: #13bee95e;
 }
 
 /* A kör belsejében az idő */
@@ -54,9 +58,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-48%, -60%);
   font-size: 3rem;
-  font-weight: 600;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-shadow: 10px 1px 10px rgba(0, 0, 0, 0.5), -10px -5px 10px rgba(255, 255, 255, 0.041);
 }
 
 /* Gombok */
@@ -68,13 +74,14 @@
 }
 
 .btn {
-  padding: 0.6rem 1.4rem;
+  padding: 0.8rem 0.8rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 30px;
   font-weight: 500;
   cursor: pointer;
   font-size: 1rem;
   transition: 0.2s;
+  margin: 10px;
 }
 
 .start {
@@ -92,9 +99,7 @@
   color: black;
 }
 
-.btn:hover {
-  transform: scale(1.05);
-}
+
 
 /* Alsó szöveg */
 .next-break {
@@ -115,6 +120,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: 60px;
 }
 
 .timer-setting label {
@@ -131,4 +137,39 @@
   width: 80px;
   text-align: center;
   font-size: 14px;
+}
+
+.button-group{
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.30);
+}
+
+.btn.start{
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  background-color: rgb(38, 180, 38);
+  color: white;
+}
+.btn.pause{
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  background-color: rgb(114, 114, 114);
+  color: white;
+}
+.btn.end{
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  background-color: rgb(184, 20, 20);
+  color: white;
+}
+
+.btn.start:hover {
+  background-color: rgb(29, 141, 29);
+  transform: scale(0.95);
+}
+.btn.pause:hover {
+  background-color: rgb(104, 104, 104);
+  transform: scale(0.95);
+}
+.btn.end:hover {
+  background-color: rgb(153, 16, 16);
+  transform: scale(0.95);
 }
