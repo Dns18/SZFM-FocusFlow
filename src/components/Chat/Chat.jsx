@@ -114,7 +114,9 @@ export default function Chat() {
           <option value="groq">Groq</option>
         </select>
 
-
+        <div style={{ marginLeft: 12, color: "#9ca3af", fontSize: 13 }}>
+        Aktuális téma: <strong style={{ color: "#fff" }}>{topic || "nincs kiválasztva (Timer-ben állítható)"}</strong>
+        </div>
       </div>
 
       <div className="chat-box" ref={boxRef}>
@@ -135,7 +137,7 @@ export default function Chat() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder={topic  `Kérdezz a(z) ${topic} témában...`}
+          placeholder={topic ? `Kérdezz a(z) ${topic} témában...` : "Előbb válassz témát a Timer-ben..."}
         />
         <button className="send-btn" onClick={handleSend}>
           <FontAwesomeIcon icon={faPaperPlane} />
