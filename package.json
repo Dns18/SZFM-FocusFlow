@@ -16,8 +16,12 @@
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "gh-pages": "^6.3.0",
     "groq-sdk": "^0.35.0",
+    "openai": "^6.9.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

@@ -44,11 +44,11 @@ export default function Timer() {
     return !isNaN(stored) ? stored : DEFAULT_FOCUS;
   });
   const [shortBreakDuration, setShortBreakDuration] = useState(() => {
-    const stored = parseInt(localStorage.getItem("shortBreak"));
+    const stored = parseInt(localStorage.getItem("shortBreakDuration"));
     return !isNaN(stored) ? stored : DEFAULT_SHORT_BREAK;
   });
   const [longBreakDuration, setLongBreakDuration] = useState(() => {
-    const stored = parseInt(localStorage.getItem("longBreak"));
+    const stored = parseInt(localStorage.getItem("longBreakDuration"));
     return !isNaN(stored) ? stored : DEFAULT_LONG_BREAK;
   });
 
@@ -289,6 +289,7 @@ if (isBreak) {
         </button>
       </div>
 
+      {/* időbeállító inputok */}
       <div className="timer-settings">
         <div className="timer-setting">
           <label>Focus (perc):</label>
@@ -383,6 +384,7 @@ if (isBreak) {
         </button>
       </div>
 
+      {/* Következő szünet/ciklus információ */}
       <p className="next-break">
         {isBreak
           ? cycleCount >= 4
