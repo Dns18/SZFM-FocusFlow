@@ -117,3 +117,10 @@
   color: #ffffff75;
   opacity: 1;
 }
+
+.chat-model-selector {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
