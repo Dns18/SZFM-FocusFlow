@@ -27,3 +27,10 @@ const openaiClient = new OpenAI({
 const groqClient = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
+
+// -------------------
+// Test route
+// -------------------
+app.get("/", (req, res) => {
+  res.send("Backend running ✅");
+});
