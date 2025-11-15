@@ -1,62 +1,76 @@
 // src/components/Chat/Chat.jsx
 import React, { useState, useRef, useEffect } from "react";
 import "./Chat.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-export default function Chat({ topic }) {
-  const [messages, setMessages] = useState([{ sender: "ai", text: "Szia! Miben segíthetek ma?" }]);
+export default function Chat() {
+  const [messages, setMessages] = useState([
+    { sender: "ai", text: "Szia! Miben segíthetek ma?" },
+  ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [model, setModel] = useState("openai"); // default model
   const boxRef = useRef(null);
 
-  useEffect(() => {
-    if (boxRef.current) boxRef.current.scrollTop = boxRef.current.scrollHeight;
-  }, [messages, loading]);
-
-  const pushMessage = (msg) => setMessages((prev) => [...prev, msg]);
-
   const handleSend = async () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
+    if (input.trim() === "") return;
 
-    // Használt topic: prop elsődleges, localStorage fallback
-    const usedTopic = (topic && topic.trim()) ? topic : (localStorage.getItem("selectedTopic") || "").trim();
-
-    if (!usedTopic) {
-      pushMessage({ sender: "ai", text: "Kérlek, előbb válaszd ki, mit szeretnél tanulni (Mit szeretnél tanulni?)." });
-      setInput("");
-      return;
-    }
-
-    const userText = trimmed;
+    const userText = input;
     setInput("");
-    pushMessage({ sender: "user", text: userText });
+
+    setMessages((prev) => [...prev, { sender: "user", text: userText }]);
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4000/api/chat", {
+      // dynamically choose endpoint based on selected model
+      const endpoint = model === "openai" ? "api/openai-chat" : "api/groq-chat";
+
+      const res = await fetch(`http://localhost:4000/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: usedTopic, message: userText }),
+        body: JSON.stringify({ message: userText }),
       });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
-      if (data?.reply) pushMessage({ sender: "ai", text: data.reply });
-      else pushMessage({ sender: "ai", text: "Nem érkezett érvényes válasz a szervertől." });
+      setMessages((prev) => [
+        ...prev,
+        { sender: "ai", text: data.reply || "Nem érkezett érvényes válasz a szervertől." },
+      ]);
     } catch (err) {
-      console.error("Chat hiba:", err);
-      pushMessage({ sender: "ai", text: "⚠️ Hiba történt a szerverrel való kommunikáció közben. Próbáld újra később." });
-    } finally {
-      setLoading(false);
+      console.error(err);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "ai", text: "⚠️ Hiba történt a szerverrel való kommunikáció közben." },
+      ]);
     }
+
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div className="chat-wrapper">
       <h3 className="chat-title">AI TUTOR</h3>
+
+      {/* --- Model Selector --- */}
+      <div className="chat-model-selector">
+        <label htmlFor="model-select">Válassz modellt:</label>
+        <select
+          id="model-select"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+        >
+          <option value="openai">OpenAI</option>
+          <option value="groq">Groq</option>
+        </select>
+      </div>
 
       <div className="chat-box" ref={boxRef}>
         {messages.map((m, i) => (
@@ -65,7 +79,9 @@ export default function Chat({ topic }) {
           </div>
         ))}
 
-        {loading && <div className="chat-message ai">Gondolkodom...</div>}
+        {loading && (
+          <div className="chat-message ai">Gondolkodom...</div>
+        )}
       </div>
 
       <div className="chat-input-group">
@@ -74,9 +90,9 @@ export default function Chat({ topic }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder={topic ? "Kérdezz a kiválasztott témáról..." : "Előbb válaszd ki a témát..."}
+          placeholder="Kérdezz bármit..."
         />
-        <button className="send-btn" onClick={handleSend} disabled={loading} title={topic ? "Küldés" : "Válassz témát előbb"}>
+        <button className="send-btn" onClick={handleSend}>
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </div>
