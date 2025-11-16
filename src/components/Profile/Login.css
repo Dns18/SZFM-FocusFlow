@@ -1,5 +1,3 @@
-/* auth.css - sötét hátterű form, kék primér gomb: #0b7df0 */
-
 /* Konténer */
 .auth-form {
   background: linear-gradient(180deg, #0b1220 0%, #0f1724 100%);
@@ -208,14 +206,6 @@
   transform: translateY(0);
   box-shadow: 0 6px 14px rgba(11,125,240,0.08);
 }
-
-/* Ha szeretnéd teljesen egyszínű kék gombként:
-.auth-footer .login-btn {
-  background: linear-gradient(180deg, #0b7df0 0%, #0467c8 100%);
-  color: #fff;
-  border: none;
-}
-*/
 
 /* Mobil: ugyanaz, függőleges elrendezés kezelve fent */
 @media (max-width: 520px) {
