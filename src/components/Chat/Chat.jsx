@@ -21,7 +21,7 @@ export default function Chat() {
   });
 
   const boxRef = useRef(null);
-
+/*
   useEffect(() => {
     const onStorage = (e) => {
       if (e.key === "selectedTopic") {
@@ -31,6 +31,17 @@ export default function Chat() {
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
+  */
+   useEffect(() => {
+    const onTopicChange = (e) => {
+      setTopic(e.detail || "");
+    };
+
+    window.addEventListener("topicChange", onTopicChange);
+
+    return () => window.removeEventListener("topicChange", onTopicChange);
+  }, []);
+/** */
 
   const readCurrentTopic = () => {
     try {
@@ -104,18 +115,19 @@ export default function Chat() {
       <h3 className="chat-title">AI TUTOR</h3>
 
       <div className="chat-model-selector">
-        <label htmlFor="model-select">Válassz modellt:</label>
-        <select
-          id="model-select"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-        >
-          <option value="openai">OpenAI</option>
-          <option value="groq">Groq</option>
-        </select>
-
-        <div style={{ marginLeft: 12, color: "#9ca3af", fontSize: 13 }}>
-        Aktuális téma: <strong style={{ color: "#fff" }}>{topic || "nincs kiválasztva (Timer-ben állítható)"}</strong>
+        <div className="left-side">
+          <label htmlFor="model-select">Modell:</label>
+          <select id="model-select" value={model} onChange={(e) => setModel(e.target.value)}>
+            <option value="openai">OpenAI</option>
+            <option value="groq">Groq</option>
+          </select>
+        </div>
+        <div className="right-side">
+          <div style={{ marginLeft: 12, color: "#9ca3af", fontSize: 13 }}>
+              Aktuális téma: <strong style={{ color: "#fff" }}>
+                {topic || "nincs kiválasztva (Timer-ben állítható)"}
+            </strong>
+          </div>
         </div>
       </div>
 
