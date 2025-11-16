@@ -217,10 +217,11 @@ export default function Timer() {
     const trimmed = newTopic.trim();
     if (!trimmed) return;
 
-    if (topics.includes(trimmed)) {
+        if (topics.includes(trimmed)) {
       setNewTopic("");
       setTopic(trimmed);
       try { localStorage.setItem("selectedTopic", trimmed); } catch (err) {}
+      window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed })); // ÚJ
       return;
     }
 
@@ -230,8 +231,10 @@ export default function Timer() {
 
     setTopic(trimmed);
     try { localStorage.setItem("selectedTopic", trimmed); } catch (err) {}
+    window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed })); // ÚJ
 
     setNewTopic("");
+
   };
 
   const handleRemoveTopic = (t) => {
@@ -245,6 +248,7 @@ export default function Timer() {
       const newTopic = updated[0] || "";
       setTopic(newTopic);
       try { localStorage.setItem("selectedTopic", newTopic); } catch (err) {}
+      window.dispatchEvent(new CustomEvent("topicChange", { detail: newTopic })); // ÚJ
     }
   };
 
@@ -254,15 +258,20 @@ export default function Timer() {
 
       <div style={{ marginBottom: 12, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
         <label style={{ color: "#cbd5e1", fontSize: 14 }}>Mit szeretnél tanulni?</label>
-
+      
         <select
           value={topic}
           onChange={(e) => {
             const v = e.target.value;
             setTopic(v);
             try { localStorage.setItem("selectedTopic", v); } catch (err) {}
+            window.dispatchEvent(new CustomEvent("topicChange", { detail: v })); // ÚJ
           }}
           disabled={isActive}
+
+
+
+
           style={{
             padding: "6px 10px",
             borderRadius: 8,
