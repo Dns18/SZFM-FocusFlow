@@ -217,7 +217,7 @@ export default function Timer() {
     const trimmed = newTopic.trim();
     if (!trimmed) return;
 
-        if (topics.includes(trimmed)) {
+    if (topics.includes(trimmed)) {
       setNewTopic("");
       setTopic(trimmed);
       try { localStorage.setItem("selectedTopic", trimmed); } catch (err) {}
