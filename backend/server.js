@@ -1,4 +1,4 @@
-/* Backend with OpenAI and Groq API integration */
+/* Backend with OpenAI and Groq API integration + simple file-based auth (signup/login) */
 
 const express = require("express");
 const cors = require("cors");
@@ -11,6 +11,11 @@ const OpenAI = require("openai");
 
 // === Groq SDK ===
 const Groq = require("groq-sdk");
+
+// === Auth deps ===
+const bcrypt = require("bcryptjs");
+const fs = require("fs").promises;
+const path = require("path");
 
 const app = express();
 app.use(cors());
@@ -175,6 +180,76 @@ app.post("/api/groq-chat", async (req, res) => {
       reply:
         "⚠️ Hiba történt a Groq AI hívás közben. (Részletek a szerver konzolon.)",
     });
+  }
+});
+
+// -------------------
+// Auth endpoints (signup / login)
+// -------------------
+const USERS_FILE = path.join(__dirname, "users.json");
+const SALT_ROUNDS = 10;
+
+async function readUsers() {
+  try {
+    const raw = await fs.readFile(USERS_FILE, "utf8");
+    return JSON.parse(raw);
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      await fs.writeFile(USERS_FILE, JSON.stringify([]));
+      return [];
+    }
+    throw err;
+  }
+}
+async function writeUsers(users) {
+  await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2));
+}
+
+// Signup endpoint
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { email, password, name } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "Hiányzó mezők" });
+
+    const users = await readUsers();
+    const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (exists) return res.status(409).json({ error: "A felhasználó már létezik" });
+
+    const hashed = await bcrypt.hash(password, SALT_ROUNDS);
+    const newUser = {
+      id: Date.now(),
+      email,
+      name: name || "",
+      password: hashed,
+      createdAt: new Date().toISOString()
+    };
+    users.push(newUser);
+    await writeUsers(users);
+
+    return res.status(201).json({ message: "Regisztráció sikeres", user: { id: newUser.id, email: newUser.email, name: newUser.name } });
+  } catch (err) {
+    console.error("Signup error:", err);
+    return res.status(500).json({ error: "Szerverhiba" });
+  }
+});
+
+// Login endpoint
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "Hiányzó mezők" });
+
+    const users = await readUsers();
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) return res.status(401).json({ error: "Helytelen e-mail vagy jelszó" });
+
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok) return res.status(401).json({ error: "Helytelen e-mail vagy jelszó" });
+
+    return res.json({ message: "Bejelentkezés sikeres", user: { id: user.id, email: user.email, name: user.name } });
+  } catch (err) {
+    console.error("Login error:", err);
+    return res.status(500).json({ error: "Szerverhiba" });
   }
 });
 

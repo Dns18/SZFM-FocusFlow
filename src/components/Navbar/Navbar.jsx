@@ -10,7 +10,7 @@ export default function Navbar({ route, setRoute }) {
     { id: "homepage", label: "Kezdőlap" },
     { id: "dashboard", label: "Statisztikák" },
     { id: "courses", label: "Tanfolyamok" },
-    { id: "analytics", label: "Elemzések" },
+    { id: "profile", label: "Profil" },
   ];
     const [menuOpen, setMenuOpen] = useState(false);
     const [loaded, setLoaded] = useState(false);
