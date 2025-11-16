@@ -139,13 +139,6 @@
   font-size: 14px;
 }
 
-.button-group{
-  padding: 20px;
-  /*
-  border-radius: 15px;
-  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.30);*/
-}
-
 .btn.start{
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.050);
   background-color: rgb(38, 180, 38);
