@@ -113,7 +113,9 @@ export default function Chat() {
         </div>
         <div class="right-side">
           <div style={{ marginLeft: 12, color: "#9ca3af", fontSize: 13 }}>
-          Aktuális téma: <strong style={{ color: "#fff" }}>{topic || "nincs kiválasztva (Timer-ben állítható)"}</strong>
+              Aktuális téma: <strong style={{ color: "#fff" }}>
+                {topic || "nincs kiválasztva (Timer-ben állítható)"}
+            </strong>
           </div>
         </div>
       </div>
