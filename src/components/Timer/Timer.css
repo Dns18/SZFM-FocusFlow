@@ -202,9 +202,6 @@
   -webkit-appearance: none;
   margin: 0;
 }
-.timer-setting .focus-input {
-  -moz-appearance: textfield;
-}
 
 /* custom nyilak konténer */
 .timer-setting .spinner-buttons {
