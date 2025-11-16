@@ -9,8 +9,7 @@ import Profile from "./components/Profile/Profile";
 import "./App.css";
 
 export default function App() {
-  // Alapértelmezett nézet: bejelentkezés
-  const [route, setRoute] = useState("login");
+  const [route, setRoute] = useState("homepage");
   const [user, setUser] = useState(null);
 
   const handleLogin = (u) => {
