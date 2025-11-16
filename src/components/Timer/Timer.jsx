@@ -2,8 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import "./Timer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faStop, faRotateRight, faXmark } from '@fortawesome/free-solid-svg-icons';
-
+import { faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons';
 
 const STORAGE_KEY = "focusflow_sessions_v1";
 const TOPICS_KEY = "focusflow_topics_v1";
@@ -140,7 +139,7 @@ export default function Timer() {
 
   useEffect(() => {
     if (!isActive) setTime(focusDuration);
-  }, [focusDuration]);
+  }, [focusDuration, isActive]);
 
   useEffect(() => {
     if (time > 0 && time <= 5) {
@@ -197,7 +196,7 @@ export default function Timer() {
         return;
       }
     }
-  }, [time]);
+  }, [time, isBreak, cycleCount, focusDuration, longBreakDuration, shortBreakDuration, topic]);
 
   useEffect(() => {
     return () => {
@@ -208,7 +207,9 @@ export default function Timer() {
     };
   }, []);
 
-  const totalForPercentage = isBreak ? (cycleCount >= 4 && isBreak ? longBreakDuration : shortBreakDuration) : focusDuration;
+  const totalForPercentage = isBreak
+    ? (cycleCount >= 4 && isBreak ? longBreakDuration : shortBreakDuration)
+    : focusDuration;
   const percentage = (time / totalForPercentage) * 100;
 
   // --- topic kezelő funkciók ---
@@ -221,7 +222,7 @@ export default function Timer() {
       setNewTopic("");
       setTopic(trimmed);
       try { localStorage.setItem("selectedTopic", trimmed); } catch (err) {}
-      window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed })); // ÚJ
+      window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed }));
       return;
     }
 
@@ -231,10 +232,9 @@ export default function Timer() {
 
     setTopic(trimmed);
     try { localStorage.setItem("selectedTopic", trimmed); } catch (err) {}
-    window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed })); // ÚJ
+    window.dispatchEvent(new CustomEvent("topicChange", { detail: trimmed }));
 
     setNewTopic("");
-
   };
 
   const handleRemoveTopic = (t) => {
@@ -248,30 +248,58 @@ export default function Timer() {
       const newTopic = updated[0] || "";
       setTopic(newTopic);
       try { localStorage.setItem("selectedTopic", newTopic); } catch (err) {}
-      window.dispatchEvent(new CustomEvent("topicChange", { detail: newTopic })); // ÚJ
+      window.dispatchEvent(new CustomEvent("topicChange", { detail: newTopic }));
+    }
+  };
+
+  // ------ ÚJ: helper függvények a 3 inputhoz (ugyanaz a logika, mint eddig) ------
+
+  const setFocusMinutes = (minutes) => {
+    if (!isNaN(minutes) && minutes > 0) {
+      setFocusDuration(minutes * 60);
+      setTime(minutes * 60);
+      localStorage.setItem("focusDuration", minutes * 60);
+    }
+  };
+
+  const setShortBreakMinutes = (minutes) => {
+    if (!isNaN(minutes) && minutes > 0) {
+      setShortBreakDuration(minutes * 60);
+      localStorage.setItem("shortBreakDuration", minutes * 60);
+      if (isBreak && cycleCount < 4) {
+        setTime(minutes * 60);
+      }
+    }
+  };
+
+  const setLongBreakMinutes = (minutes) => {
+    if (!isNaN(minutes) && minutes > 0) {
+      setLongBreakDuration(minutes * 60);
+      localStorage.setItem("longBreakDuration", minutes * 60);
+      if (isBreak && cycleCount >= 4) {
+        setTime(minutes * 60);
+      }
     }
   };
 
   return (
     <div className="timer-wrapper">
-      <h2 className="focus-title">{isBreak ? (cycleCount >= 4 ? "HOSSZÚ SZÜNET" : "SZÜNET") : "FOCUS SESSIONS"}</h2>
+      <h2 className="focus-title">
+        {isBreak ? (cycleCount >= 4 ? "HOSSZÚ SZÜNET" : "SZÜNET") : "FOCUS SESSIONS"}
+      </h2>
 
       <div style={{ marginBottom: 12, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
         <label style={{ color: "#cbd5e1", fontSize: 14 }}>Mit szeretnél tanulni?</label>
-      
+
         <select
           value={topic}
           onChange={(e) => {
             const v = e.target.value;
             setTopic(v);
             try { localStorage.setItem("selectedTopic", v); } catch (err) {}
-            window.dispatchEvent(new CustomEvent("topicChange", { detail: v })); // ÚJ
+            window.dispatchEvent(new CustomEvent("topicChange", { detail: v }));
           }}
           disabled={isActive}
-
-
-
-
           style={{
             padding: "6px 10px",
             borderRadius: 8,
@@ -337,8 +365,6 @@ export default function Timer() {
         </button>
       </div>
 
-      
-
       <div className="circle-wrapper">
         <svg className="progress-ring" width="260" height="260">
           <defs>
@@ -362,60 +388,90 @@ export default function Timer() {
         <div className="time-text">{formatTime(time)}</div>
       </div>
 
+      {/* ----------- ITT VANNAK AZ ÚJ, EGYFORMA DESIGN-Ú INPUTOK ----------- */}
       <div className="timer-settings">
+        {/* FOCUS */}
         <div className="timer-setting">
           <label>Focus (perc):</label>
-          <input
-            type="number"
-            min="1"
-            value={focusDuration / 60}
-            onChange={(e) => {
-              const minutes = parseInt(e.target.value);
-              if (!isNaN(minutes) && minutes > 0) {
-                setFocusDuration(minutes * 60);
-                setTime(minutes * 60);
-                localStorage.setItem("focusDuration", minutes * 60);
-              }
-            }}
-          />
+          <div className="number-wrapper">
+            <input
+              className="focus-input"
+              type="number"
+              min="1"
+              value={focusDuration / 60}
+              onChange={(e) => setFocusMinutes(parseInt(e.target.value))}
+            />
+            <div className="spinner-buttons">
+              <button
+                className="spin-btn up"
+                onClick={() => setFocusMinutes(focusDuration / 60 + 1)}
+              >
+                ▲
+              </button>
+              <button
+                className="spin-btn down"
+                onClick={() => setFocusMinutes(focusDuration / 60 - 1)}
+              >
+                ▼
+              </button>
+            </div>
+          </div>
         </div>
 
+        {/* SHORT BREAK */}
         <div className="timer-setting">
           <label>Short Break (perc):</label>
-          <input
-            type="number"
-            min="1"
-            value={shortBreakDuration / 60}
-            onChange={(e) => {
-              const minutes = parseInt(e.target.value);
-              if (!isNaN(minutes) && minutes > 0) {
-                setShortBreakDuration(minutes * 60);
-                localStorage.setItem("shortBreakDuration", minutes * 60);
-                if (isBreak && cycleCount < 4) {
-                  setTime(minutes * 60);
-                }
-              }
-            }}
-          />
+          <div className="number-wrapper">
+            <input
+              className="focus-input"
+              type="number"
+              min="1"
+              value={shortBreakDuration / 60}
+              onChange={(e) => setShortBreakMinutes(parseInt(e.target.value))}
+            />
+            <div className="spinner-buttons">
+              <button
+                className="spin-btn up"
+                onClick={() => setShortBreakMinutes(shortBreakDuration / 60 + 1)}
+              >
+                ▲
+              </button>
+              <button
+                className="spin-btn down"
+                onClick={() => setShortBreakMinutes(shortBreakDuration / 60 - 1)}
+              >
+                ▼
+              </button>
+            </div>
+          </div>
         </div>
 
+        {/* LONG BREAK */}
         <div className="timer-setting">
           <label>Long Break (perc):</label>
-          <input
-            type="number"
-            min="1"
-            value={longBreakDuration / 60}
-            onChange={(e) => {
-              const minutes = parseInt(e.target.value);
-              if (!isNaN(minutes) && minutes > 0) {
-                setLongBreakDuration(minutes * 60);
-                localStorage.setItem("longBreakDuration", minutes * 60);
-                if (isBreak && cycleCount >= 4) {
-                  setTime(minutes * 60);
-                }
-              }
-            }}
-          />
+          <div className="number-wrapper">
+            <input
+              className="focus-input"
+              type="number"
+              min="1"
+              value={longBreakDuration / 60}
+              onChange={(e) => setLongBreakMinutes(parseInt(e.target.value))}
+            />
+            <div className="spinner-buttons">
+              <button
+                className="spin-btn up"
+                onClick={() => setLongBreakMinutes(longBreakDuration / 60 + 1)}
+              >
+                ▲
+              </button>
+              <button
+                className="spin-btn down"
+                onClick={() => setLongBreakMinutes(longBreakDuration / 60 - 1)}
+              >
+                ▼
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

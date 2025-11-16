@@ -141,22 +141,23 @@
 
 .button-group{
   padding: 20px;
+  /*
   border-radius: 15px;
-  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.30);
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.30);*/
 }
 
 .btn.start{
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.050);
   background-color: rgb(38, 180, 38);
   color: white;
 }
 .btn.pause{
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.050);
   background-color: rgb(114, 114, 114);
   color: white;
 }
 .btn.end{
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 20px rgba(255, 255, 255, 0.050);
   background-color: rgb(184, 20, 20);
   color: white;
 }
@@ -172,4 +173,69 @@
 .btn.end:hover {
   background-color: rgb(153, 16, 16);
   transform: scale(0.95);
+}
+.timer-setting .number-wrapper {
+  position: relative;
+  display: inline;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100px;
+  text-align: center;
+}
+
+.timer-setting .focus-input {
+  width: 50px;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: #0a162c79;
+  color: white;
+  outline: none;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.30);
+}
+
+/* natív nyilak elrejtése */
+.timer-setting .focus-input::-webkit-inner-spin-button,
+.timer-setting .focus-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.timer-setting .focus-input {
+  -moz-appearance: textfield;
+}
+
+/* custom nyilak konténer */
+.timer-setting .spinner-buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* fel/le gombok */
+.timer-setting .spin-btn {
+  background: #1f293300;
+  border: none;
+  color: rgb(146, 146, 146);
+  width: 15px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0;
+  transition: 0.15s;
+}
+
+.timer-setting .spin-btn:hover {
+  background: #273444b9;
+}
+
+.timer-setting .spin-btn:active {
+  background: #3c4a5a;
 }
