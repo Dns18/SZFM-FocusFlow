@@ -208,7 +208,8 @@
 }
 
 /* Mobil: ugyanaz, függőleges elrendezés kezelve fent */
-@media (max-width: 520px) {
+@media (max-width: 520px){
   .auth-footer .login-btn {
     width: 100%;
   }
+}
