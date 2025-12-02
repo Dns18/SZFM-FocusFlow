@@ -1,53 +1,52 @@
+/* src/components/Navbar/Navbar.css */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0b1220;
-  color: white;
+  background: var(--nav-bg);
+  color: var(--text-color-primary);
   padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.16);
+  box-shadow: 0 2px 6px var(--shadow-color);
   position: relative;
   min-height: 64px;
-  background: transparent;
+  background: var(--nav-bg);
   backdrop-filter: blur(10px);
   z-index: 100;
   position: fixed;
   width: 100%;
   top: 0;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 .logo {
   font-weight: 700;
   letter-spacing: 1px;
-  /* Fő navigációs sáv */
 }
 
 .nav-links {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .hamburger-btn {
   display: none;
   background: none;
   border: none;
-  color: #cbd5e1;
-  /* Logó szöveg */
+  color: var(--text-color-secondary);
   font-size: 1.4rem;
   cursor: pointer;
   z-index: 101;
 }
 
-  /* Navigációs gombok desktopon */
 .mobile-menu {
   position: fixed;
   top: 0;
   right: -320px;
   width: 260px;
-  /* Hamburger ikon mobilon */
   height: 100vh;
-  background: #0b1220;
-  box-shadow: -2px 0 12px rgba(0,0,0,0.18);
+  background: var(--nav-bg);
+  box-shadow: -2px 0 12px var(--shadow-color);
   transition: right 0.3s cubic-bezier(.4,0,.2,1);
   z-index: 9999;
   display: flex;
@@ -55,14 +54,13 @@
   padding: 32px 18px 18px 18px;
 }
 .mobile-menu.open {
-  /* Jobbról előjövő mobil menü */
   right: 0;
 }
 
 .close-btn {
   background: none;
   border: none;
-  color: #cbd5e1;
+  color: var(--text-color-secondary);
   font-size: 1.2rem;
   align-self: flex-end;
   margin-bottom: 18px;
@@ -86,15 +84,14 @@
 .mobile-menu.open .nav-item:nth-child(2) { transition-delay: 0.12s; }
 .mobile-menu.open .nav-item:nth-child(3) { transition-delay: 0.19s; }
 .mobile-menu.open .nav-item:nth-child(4) { transition-delay: 0.26s; }
+.mobile-menu.open .nav-item:nth-child(5) { transition-delay: 0.33s; } /* Új delay a téma váltónak */
 
 .mobile-nav-links {
   display: flex;
   flex-direction: column;
-  /* Mobil menü nyitott állapotban */
   gap: 32px;
 }
 .mobile-nav-links .nav-item {
-  /* Bezáró X gomb mobil menüben */
   font-size: 1.18rem;
   padding: 16px 12px;
 }
@@ -102,27 +99,64 @@
   margin-top: 32px;
 }
 
-
-
-  /* Mobil menü gombjainak konténere */
 .nav-item {
   background: transparent;
   border: none;
-  color: #cbd5e1;
+  color: var(--text-color-secondary);
   padding: 8px 12px;
-  /* Mobil menü gombok nagyobb méretben */
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.4s, color 0.4s;
 }
 
-  /* Mobil menü első gombja fölött margó */
-.nav-item:hover { background: rgba(255,255,255,0.03); transition: 0.4s; }
+.nav-item:hover { background: rgba(255,255,255,0.03); }
 
 .nav-item.active {
-  background: rgba(37,99,235,0.16);
-  /* Navigációs gomb stílus */
-  color: #60a5fa;
+  background: var(--nav-item-active-bg);
+  color: var(--nav-item-active-color);
   font-weight: 400;
+}
+
+/* Téma váltó gomb egyedi stílusa */
+.theme-toggle-btn {
+  background: var(--panel-bg);
+  border: 1px solid var(--text-color-secondary);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-color-primary);
+}
+.theme-toggle-btn:hover {
+  background: var(--panel-bg);
+  opacity: 0.8;
+}
+.theme-toggle-btn .button-text {
+  display: none; /* Desktopon csak ikon */
+}
+
+/* Mobil menüben a téma gomb */
+.theme-toggle-btn.mobile {
+  padding: 16px 12px;
+  justify-content: flex-start;
+  font-size: 1.18rem;
+  border: none;
+  background: transparent;
+  color: var(--text-color-secondary);
+  transform: translateX(0) !important; /* Felülírja az animációt */
+  opacity: 1 !important;
+}
+.theme-toggle-btn.mobile .button-text {
+  display: inline; /* Mobilon megjelenik a szöveg */
+}
+
+@media (min-width: 801px) {
+  .theme-toggle-btn {
+    padding: 8px;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 800px) {
@@ -132,5 +166,4 @@
   .hamburger-btn {
     display: block;
   }
-  /* Aktív navigációs gomb */
 }

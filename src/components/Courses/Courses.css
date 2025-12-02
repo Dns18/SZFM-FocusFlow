@@ -1,169 +1,57 @@
-/* alap grid és card (te adtad ezeket) */
-.course-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-.course-card {
-  background: #0f1724;
-  padding: 12px;
-  border-radius: 10px;
-  min-height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  overflow: hidden;
+/* src/components/Courses/Courses.css (ADD TO END OF FILE) */
+
+.courses-section {
+    padding: 20px;
+    color: var(--text-color-primary); /* Fő szöveg színének biztosítása */
+    transition: color 0.5s;
 }
 
-/* form / input layout a card tetején */
-.materials-form-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.input-flexible {
-  padding: 6px;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-.input-full {
-  padding: 6px;
-  border-radius: 6px;
-  box-sizing: border-box;
-  flex: 1 1 160px;
-  min-width: 0;
-  width: 100%;
-}
-.url-input {
-  padding: 6px;
-  border-radius: 6px;
-  box-sizing: border-box;
-  flex: 0 1 160px;
-  min-width: 0;
+.course-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 
-/* kis gombok */
-.small-btn {
-  padding: 6px 8px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  color: white;
-  background: #374151; /* alap feltöltés gomb */
-}
-.small-btn.primary {
-  background: #0b7df0;
-}
-.small-btn.danger {
-  background: #7f1d1d;
+.course-input {
+    padding: 8px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    min-width: 160px;
+    background: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    transition: background 0.5s, color 0.5s, border-color 0.5s;
 }
 
-/* material list elemek */
-.material-list {
-  margin: 8px 0 0 16px;
-  padding: 0;
-  list-style: none;
-}
-.material-item {
-  margin-bottom: 6px;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  align-items: center;
-}
-.material-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-  flex: 1;
-}
-.material-title-wrap {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.material-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-}
-.material-title.link {
-  color: #60a5fa;
-  text-decoration: none;
-}
-.material-filename {
-  color: #9ca3af;
-  font-size: 12px;
-  margin-left: 6px;
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block;
+.course-add-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background: var(--btn-primary);
+    transition: background 0.5s;
 }
 
-/* download button */
-.file-download {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: #0b7df0;
-  color: white;
-  text-decoration: none;
-  margin-left: 6px;
-  flex: 0 0 28px;
+.course-description, .no-material-text {
+    margin: 6px 0 0;
+    color: var(--text-color-secondary); /* Változó */
+    word-break: break-word;
+    transition: color 0.5s;
 }
 
-/* tooltip: CSS alapú, a data-course-title attribútumot használja */
-.course-tooltip {
-  position: relative;
-  display: inline-block;
-}
-.course-tooltip[data-course-title]:hover::after {
-  content: attr(data-course-title);
-  position: absolute;
-  left: 0;
-  top: -34px;
-  white-space: nowrap;
-  background: rgba(17, 24, 39, 0.95);
-  color: #fff;
-  padding: 6px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  z-index: 30;
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
-  transform-origin: left bottom;
-  opacity: 1;
-}
-/* kis nyíl */
-.course-tooltip[data-course-title]:hover::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: -10px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent transparent rgba(17, 24, 39, 0.95) transparent;
-  z-index: 31;
-}
-/* touch eszközökön nem jelenik meg */
-@media (max-width: 600px) {
-  .course-tooltip[data-course-title]:hover::after,
-  .course-tooltip[data-course-title]:hover::before {
-    display: none;
-  }
+.no-material-text {
+    margin: 0;
+    font-size: 0.9em;
 }
 
-/* kisebb finomítások a listában */
-.material-title, .material-filename {
-  line-height: 1;
+/* Kiegészítés a meglévő small-btn-hez (tananyag gombja) */
+.small-btn.secondary {
+    background: var(--panel-bg);
+    color: var(--text-color-primary);
+    border: 1px solid var(--text-color-secondary);
+}
+.small-btn.secondary:hover {
+    background: var(--chat-ai-bg);
 }

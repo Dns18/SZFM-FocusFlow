@@ -1,9 +1,58 @@
+/* src/index.css */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body,#root{height:100%}
+
+/* === ALAPÉRTELMEZETT (DARK MODE) SZÍNEK === */
+:root {
+  --app-bg: #0b1220; /* Teljes oldal háttérszíne */
+  --text-color-primary: #ffffff; /* Fő szövegszín */
+  --text-color-secondary: #9ca3af; /* Másodlagos szövegszín */
+  --panel-bg: #111836; /* Panelek (timer, content, chat wrapper) háttérszíne */
+  --nav-bg: #111836; /* Navbar háttérszíne */
+  --chat-box-bg: #1a29429a; /* Chat üzenet doboz háttér */
+  --chat-ai-bg: #334155; /* AI üzenet háttér */
+  --chat-ai-text: #cbd5e1; /* AI üzenet szöveg */
+  --chat-user-bg: #00e0ff; /* Felhasználói üzenet háttér */
+  --chat-user-text: #000000; /* Felhasználói üzenet szöveg */
+  --input-bg: #0b1220; /* Input mezők háttér (Timer, Chat) */
+  --input-text: #ffffff;
+  --input-border: #4a5568; /* VÉGLEGES JAVÍTÁS: Sötét, szürke keret Dark módban */
+  --shadow-color: rgba(0, 0, 0, 0.4); /* Sötét árnyék */
+  --btn-primary: #0b7df0; /* Blue */
+  --btn-danger: #7f1d1d; /* Red */
+  --nav-item-active-bg: rgba(37,99,235,0.16);
+  --nav-item-active-color: #60a5fa;
+  --link-color: #60a5fa;
+}
+
+/* === LIGHT MODE FELÜLÍRÁSA (.light-mode CSS osztály) === */
+.light-mode {
+  --app-bg: #f5f7fa;
+  --text-color-primary: #111827;
+  --text-color-secondary: #4b5563;
+  --panel-bg: #ffffff;
+  --nav-bg: #ffffff;
+  --chat-box-bg: #e5e7eb;
+  --chat-ai-bg: #f3f4f6;
+  --chat-ai-text: #374151;
+  --chat-user-bg: #3b82f6;
+  --chat-user-text: #ffffff;
+  --input-bg: #ffffff;
+  --input-text: #111827;
+  --input-border: #d1d5db;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --btn-primary: #3b82f6;
+  --btn-danger: #ef4444;
+  --nav-item-active-bg: rgba(30,64,175,0.16);
+  --nav-item-active-color: #3b82f6;
+  --link-color: #3b82f6;
+}
+
 body{
   font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", sans-serif;
-  background: #0b1220;
-  color:#111827;
+  background: var(--app-bg);
+  color: var(--text-color-primary);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  transition: background 0.5s, color 0.5s;
 }

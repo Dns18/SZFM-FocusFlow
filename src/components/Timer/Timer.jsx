@@ -288,8 +288,8 @@ export default function Timer() {
         {isBreak ? (cycleCount >= 4 ? "HOSSZÚ SZÜNET" : "SZÜNET") : "FOCUS SESSIONS"}
       </h2>
 
-      <div style={{ marginBottom: 12, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-        <label style={{ color: "#cbd5e1", fontSize: 14 }}>Mit szeretnél tanulni?</label>
+      <div className="timer-topic-select-group">
+        <label>Mit szeretnél tanulni?</label>
 
         <select
           value={topic}
@@ -300,14 +300,6 @@ export default function Timer() {
             window.dispatchEvent(new CustomEvent("topicChange", { detail: v }));
           }}
           disabled={isActive}
-          style={{
-            padding: "6px 10px",
-            borderRadius: 8,
-            border: "none",
-            background: isActive ? "#222" : "#0b1220",
-            color: "white",
-            cursor: isActive ? "not-allowed" : "pointer"
-          }}
         >
           {topics.map((t) => (
             <option key={t} value={t}>
@@ -319,47 +311,25 @@ export default function Timer() {
         <button
           onClick={() => topic && handleRemoveTopic(topic)}
           disabled={isActive}
-          style={{
-            padding: "6px 8px",
-            borderRadius: 8,
-            background: isActive ? "#4b1212" : "#7f1d1d",
-            color: "white",
-            border: "none",
-            cursor: isActive ? "not-allowed" : "pointer"
-          }}
+          className="remove-topic-btn"
           title={isActive ? "A timer fut — előbb állítsd meg a timert" : "Téma törlése"}
         >
           Töröl
         </button>
       </div>
 
-      <div style={{ marginBottom: 12, display: "flex", gap: 8 }}>
+      <div className="timer-topic-add-group">
         <input
+          className="new-topic-input"
           value={newTopic}
           onChange={(e) => setNewTopic(e.target.value)}
           placeholder="Új téma hozzáadása"
           disabled={isActive}
-          style={{
-            padding: "6px 8px",
-            borderRadius: 8,
-            border: "none",
-            background: isActive ? "#222" : "#0b1220",
-            color: "white",
-            flex: 1,
-            cursor: isActive ? "not-allowed" : "text"
-          }}
         />
         <button
           onClick={handleAddTopic}
           disabled={isActive}
-          style={{
-            padding: "6px 10px",
-            borderRadius: 8,
-            background: isActive ? "#4b86b1" : "#0b7df0",
-            color: "white",
-            border: "none",
-            cursor: isActive ? "not-allowed" : "pointer"
-          }}
+          className="add-topic-btn"
         >
           Hozzáad
         </button>

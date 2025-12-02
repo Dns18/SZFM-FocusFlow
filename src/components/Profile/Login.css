@@ -1,42 +1,51 @@
+/* src/components/Profile/Login.css */
 /* Konténer */
 .auth-form {
-  background: linear-gradient(180deg, #0b1220 0%, #0f1724 100%);
-  border: 1px solid rgba(255,255,255,0.04);
+  /* Változók használata: panel háttér és árnyék */
+  background: var(--panel-bg);
+  border: 1px solid var(--input-border);
   padding: 18px;
   border-radius: 12px;
   width: 100%;
   max-width: 420px;
   box-sizing: border-box;
-  color: #e6eef8;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.55);
+  color: var(--text-color-primary); /* Változó */
+  box-shadow: 0 6px 18px var(--shadow-color); /* Változó */
   margin: 0 auto;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 /* Fejléc */
 .auth-form h3 {
   margin: 0 0 12px 0;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-color-primary); /* Változó */
 }
 
 /* Hibajelzés */
 .auth-form .error {
+  /* Hibajelzés színe: fix piros marad, de a hátteret a téma is befolyásolhatja */
   background: rgba(127, 29, 29, 0.12);
-  color: #fecaca;
+  color: #fecaca; /* Világos szöveg */
   border: 1px solid rgba(127,29,29,0.22);
   padding: 8px 10px;
   border-radius: 8px;
   margin-bottom: 10px;
   font-size: 0.95rem;
 }
+.light-mode .auth-form .error {
+  /* Fekete/sötét szöveg világos módban a piroson */
+  color: #881c1c;
+}
 
 /* Label */
 .auth-form label {
   display: block;
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-color-secondary); /* Változó */
   margin-top: 10px;
   margin-bottom: 6px;
+  transition: color 0.5s;
 }
 
 /* Inputok */
@@ -47,17 +56,19 @@
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
-  color: #e6eef8;
+  border: 1px solid var(--input-border); /* VÁLTOZÓ HASZNÁLAT */
+  background: var(--input-bg); /* Változó */
+  color: var(--input-text); /* Változó */
   box-sizing: border-box;
   font-size: 0.95rem;
   outline: none;
-  transition: box-shadow .12s ease, border-color .12s ease;
+  transition: box-shadow .12s ease, border-color .12s ease, background 0.5s, color 0.5s;
 }
+
+/* FÓKUSZ ÁLLAPOT JAVÍTÁSA: Ezt kellett felülírni */
 .auth-form input:focus {
-  border-color: rgba(11,125,240,0.95);
-  box-shadow: 0 6px 18px rgba(11,125,240,0.08);
+  border-color: var(--btn-primary); /* Fókusz keret (kék) */
+  box-shadow: 0 0 0 1px var(--btn-primary), 0 6px 18px var(--shadow-color); /* Kék gyűrű + árnyék */
 }
 
 /* Primér gomb (Login / Regisztráció) - egységes kék stílus */
@@ -69,24 +80,28 @@
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(180deg, #0b7df0 0%, #0467c8 100%);
+  background: var(--btn-primary); /* Változó */
   color: #fff;
   font-weight: 600;
   font-size: 0.98rem;
-  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease, background 0.5s;
   box-shadow: 0 8px 20px rgba(11,125,240,0.16);
+}
+.light-mode .auth-form button[type="submit"],
+.light-mode .auth-action-btn {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Világosabb árnyék light módban */
 }
 
 /* Hover / active */
 .auth-form button[type="submit"]:hover,
 .auth-action-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(11,125,240,0.18);
+  box-shadow: 0 12px 28px var(--shadow-color);
 }
 .auth-form button[type="submit"]:active,
 .auth-action-btn:active {
   transform: translateY(0);
-  box-shadow: 0 6px 14px rgba(11,125,240,0.12);
+  box-shadow: 0 6px 14px var(--shadow-color);
 }
 
 /* Letiltott állapot */
@@ -101,7 +116,7 @@
 .auth-form .secondary {
   margin-top: 10px;
   background: transparent;
-  color: #9fb3d8;
+  color: var(--link-color); /* Változó */
   width: auto;
   padding: 8px 10px;
   border-radius: 8px;
@@ -112,11 +127,12 @@
 .auth-form .auth-footer {
   margin-top: 12px;
   font-size: 0.9rem;
-  color: #9fb3d8;
+  color: var(--text-color-secondary); /* Változó */
   display: flex;
   justify-content: center;
   gap: 8px;
   align-items: center;
+  transition: color 0.5s;
 }
 
 /* Reszponzív: kisebb képernyőn a form kisebb margóval */
@@ -137,19 +153,19 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: #9fb3d8;
+  color: var(--text-color-secondary); /* Változó */
   font-size: 0.95rem;
   line-height: 1;
 }
 
 .auth-footer .info-text {
-  color: #bcd7f8;
+  color: var(--text-color-secondary); /* Változó */
   opacity: 0.95;
 }
 
-/* kék regisztráció gomb — #0b7df0 */
+/* kék regisztráció gomb */
 .auth-footer .register-btn {
-  background: linear-gradient(180deg, #0b7df0 0%, #0467c8 100%);
+  background: var(--btn-primary); /* Változó */
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -158,17 +174,17 @@
   font-weight: 600;
   font-size: 0.92rem;
   box-shadow: 0 8px 20px rgba(11,125,240,0.14);
-  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease, background 0.5s;
 }
 
 .auth-footer .register-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(11,125,240,0.2);
+  box-shadow: 0 12px 30px var(--shadow-color);
 }
 
 .auth-footer .register-btn:active {
   transform: translateY(0);
-  box-shadow: 0 6px 14px rgba(11,125,240,0.12);
+  box-shadow: 0 6px 14px var(--shadow-color);
 }
 
 /* kisebb eszközökön függőleges elrendezés */
@@ -179,32 +195,29 @@
   }
 }
 /* auth-footer kiegészítés: Bejelentkezés gomb stílusa */
-/* Azonos vizuális hangulat: kék accent, de inkább outline / másodlagos kinézet */
-
 .auth-footer .login-btn {
   background: transparent;
-  color: #cfe8ff;
-  border: 1px solid rgba(11,125,240,0.18);
+  color: var(--link-color); /* Változó */
+  border: 1px solid var(--input-border); /* Változó */
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.92rem;
-  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color 0.5s;
 }
 
-/* Hover: kék háttér, invertált szöveg — megegyezik a regisztrációs gomb hangulatával */
+/* Hover: light módban is működjön a gomb */
 .auth-footer .login-btn:hover {
-  background: linear-gradient(180deg, rgba(11,125,240,0.12) 0%, rgba(4,103,200,0.08) 100%);
-  color: #eaf6ff;
+  background: transparent; /* Eltávolítva az RGB kísérlet */
+  color: var(--btn-primary);
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(11,125,240,0.12);
+  box-shadow: 0 10px 26px var(--shadow-color);
 }
-
 /* Active állapot */
 .auth-footer .login-btn:active {
   transform: translateY(0);
-  box-shadow: 0 6px 14px rgba(11,125,240,0.08);
+  box-shadow: 0 6px 14px var(--shadow-color);
 }
 
 /* Mobil: ugyanaz, függőleges elrendezés kezelve fent */
@@ -212,4 +225,21 @@
   .auth-footer .login-btn {
     width: 100%;
   }
+}
+/* Profile/auth-home kiegészítés */
+.profile button {
+    background: var(--btn-danger);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 16px;
+    transition: background 0.5s;
+}
+.profile p {
+    color: var(--text-color-primary); /* Változó */
+    margin-bottom: 8px;
+    transition: color 0.5s;
 }
