@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Courses.css";
- // igazítsd az útvonalat a projekted mappaszerkezetéhez
-
+ 
 const COURSES_KEY = "focusflow_courses_v1";
 const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5MB
 
@@ -126,27 +125,27 @@ export default function Courses() {
     setCourses((prev) => prev.map((c) => (c.id === courseId ? { ...c, materials: c.materials.filter((m) => m.id !== materialId) } : c)));
   };
 
-  // small inline styles kept for top-level inputs/buttons (optional)
-  const btnPrimary = { padding: "8px 12px", borderRadius: 8, border: "none", color: "white", cursor: "pointer", background: "#0b7df0" };
+  // small inline styles kept for top-level inputs/buttons - CSERÉLVE CSS OSZTÁLYRA
+  // const btnPrimary = { padding: "8px 12px", borderRadius: 8, border: "none", color: "white", cursor: "pointer", background: "#0b7df0" };
 
   return (
-    <section style={{ padding: 20, color: "white" }}>
+    <section className="courses-section"> {/* ÚJ OSZTÁLY AZ INLINE STÍLUS HELYETT */}
       <h1>Tantárgyak</h1>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+      <div className="course-input-group"> {/* ÚJ OSZTÁLY AZ INLINE STÍLUS HELYETT */}
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Új tantárgy neve"
-          style={{ padding: 8, borderRadius: 6, boxSizing: "border-box", minWidth: 160 }}
+          className="course-input" 
         />
         <input
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
           placeholder="Rövid leírás (opcionális)"
-          style={{ padding: 8, borderRadius: 6, boxSizing: "border-box", minWidth: 200 }}
+          className="course-input" 
         />
-        <button onClick={addCourse} style={btnPrimary}>
+        <button onClick={addCourse} className="course-add-btn primary"> {/* ÚJ OSZTÁLY */}
           Hozzáad
         </button>
       </div>
@@ -156,18 +155,19 @@ export default function Courses() {
           <div key={c.id} className="course-card">
             <div>
               <h3 style={{ margin: 0, wordBreak: "break-word" }}>{c.title}</h3>
-              {c.description && <p style={{ margin: "6px 0 0", color: "#9ca3af", wordBreak: "break-word" }}>{c.description}</p>}
+              {/* Leírás színe lecserélve osztályra */}
+              {c.description && <p className="course-description">{c.description}</p>}
             </div>
 
             <div style={{ marginTop: 10 }}>
               <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
                 <button
                   onClick={() => setSelectedCourseId(selectedCourseId === c.id ? null : c.id)}
-                  style={{ padding: "6px 8px", borderRadius: 6, border: "none", cursor: "pointer", color: "white", background: "#111836" }}
+                  className="small-btn secondary" /* ÚJ OSZTÁLY */
                 >
                   Tananyag
                 </button>
-                <button onClick={() => removeCourse(c.id)} style={{ padding: "6px 8px", borderRadius: 6, border: "none", cursor: "pointer", color: "white", background: "#7f1d1d" }}>
+                <button onClick={() => removeCourse(c.id)} className="small-btn danger">
                   Töröl
                 </button>
               </div>
@@ -195,7 +195,8 @@ export default function Courses() {
                   </div>
 
                   <ul className="material-list">
-                    {c.materials.length === 0 && <li style={{ color: "#9ca3af" }}>Nincs tananyag</li>}
+                    {/* Szöveg színe lecserélve osztályra */}
+                    {c.materials.length === 0 && <li className="no-material-text">Nincs tananyag</li>}
                     {c.materials.map((m) => (
                       <li key={m.id} className="material-item">
                         <div className="material-left">

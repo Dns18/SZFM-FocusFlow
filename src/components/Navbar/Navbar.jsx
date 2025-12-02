@@ -1,39 +1,36 @@
+// src/components/Navbar/Navbar.jsx
 import React, { useState } from "react";
-// Navbar komponens, fő navigáció
 import "./Navbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
-export default function Navbar({ route, setRoute }) {
+// Kiterjesztve a props-ot: theme és toggleTheme hozzáadva
+export default function Navbar({ route, setRoute, theme, toggleTheme }) {
   const links = [
-  // Navigációs gombok adatai
     { id: "homepage", label: "Kezdőlap" },
     { id: "dashboard", label: "Statisztikák" },
     { id: "courses", label: "Tanfolyamok" },
     { id: "profile", label: "Profil" },
   ];
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
-    // Betöltéskor animáció indítása
-    React.useEffect(() => {
-      // Animáció csak akkor, amikor a hamburger ikon eltűnik (desktop nézet)
-      const handleResize = () => {
-        if (window.innerWidth > 800) {
-          setLoaded(true);
-        } else {
-          setLoaded(false);
-        }
-      };
-      handleResize();
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-  // Mobil menü nyitva/zárva állapot
-
-  // Bezárja a mobil menüt, ha az ablakméret nagyobb lesz
   React.useEffect(() => {
+    // Animáció csak akkor, amikor a hamburger ikon eltűnik (desktop nézet)
+    const handleResize = () => {
+      if (window.innerWidth > 800) {
+        setLoaded(true);
+      } else {
+        setLoaded(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Bezárja a mobil menüt, ha nagyobb lesz az ablak
+  React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 800 && menuOpen) {
         setMenuOpen(false);
@@ -43,12 +40,24 @@ export default function Navbar({ route, setRoute }) {
     return () => window.removeEventListener('resize', handleResize);
   }, [menuOpen]);
 
+  // Az új téma gomb komponens
+  const ThemeToggleButton = ({ isMobile = false }) => (
+    <button 
+      className={`nav-item theme-toggle-btn ${isMobile ? 'mobile' : ''}`}
+      onClick={toggleTheme}
+    >
+      <FontAwesomeIcon icon={theme === 'dark-mode' ? faSun : faMoon} />
+      <span className="button-text">
+        {isMobile ? (theme === 'dark-mode' ? 'Világos Mód' : 'Sötét Mód') : ''}
+      </span>
+    </button>
+  );
+
   return (
-  <header className={`navbar${loaded ? " loaded" : ""}`}> {/* Fő navigációs sáv */}
+    <header className={`navbar${loaded ? " loaded" : ""}`}>
       <div className="logo">FocusFlow</div>
-  {/* Logó szöveg */}
+      
       <nav className="nav-links">
-  {/* Navigációs gombok desktopon */}
         {links.map((l) => (
           <button
             key={l.id}
@@ -58,19 +67,22 @@ export default function Navbar({ route, setRoute }) {
             {l.label}
           </button>
         ))}
+        {/* TÉMA VÁLTÓ GOMB DESKTOPON */}
+        <ThemeToggleButton /> 
       </nav>
+      
       <button className="hamburger-btn" onClick={() => setMenuOpen(true)}>
-  {/* Hamburger ikon mobilon */}
         <FontAwesomeIcon icon={faBars} size="lg" />
       </button>
+      
       <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
-  {/* Jobbról előjövő mobil menü */}
         <button className="close-btn" onClick={() => setMenuOpen(false)}>
-  {/* Bezáró X gomb mobil menüben */}
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </button>
+        
+        {/* TÉMA VÁLTÓ GOMB MOBILON (a mobil menüben) */}
         <nav className="mobile-nav-links">
-  {/* Mobil menü gombjainak konténere */}
+          <ThemeToggleButton isMobile={true} />
           {links.map((l) => (
             <button
               key={l.id}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Content from "./components/Content/Content";
 import Timer from "./components/Timer/Timer";
@@ -8,9 +8,35 @@ import RegisterForm from "./components/Profile/RegisterForm";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
 
+// TÉMA VÁLTÓ LOGIKA
+const getInitialTheme = () => {
+    // 1. Megnézi a felhasználó utolsó választását
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) return storedTheme;
+    
+    // 2. Ha nincs választás, megnézi a böngésző beállítását
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return prefersDark ? 'dark-mode' : 'light-mode';
+};
+
 export default function App() {
   const [route, setRoute] = useState("homepage");
   const [user, setUser] = useState(null);
+  
+  // ÁLLAPOT A TÉMÁHOZ
+  const [theme, setTheme] = useState(getInitialTheme);
+  
+  // OLDAL BETÖLTÉSEKOR BEÁLLÍTJA A body osztályát
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light-mode' ? 'dark-mode' : 'light-mode';
+    setTheme(newTheme);
+    // Mentés a localStorage-ba, hogy emlékezzen rá
+    localStorage.setItem('theme', newTheme);
+  };
 
   const handleLogin = (u) => {
     setUser(u);
@@ -29,8 +55,15 @@ export default function App() {
   };
 
   return (
-    <div className="app">
-      <Navbar route={route === "homepage" ? "homepage" : route} setRoute={setRoute} />
+    // A theme állapothoz kapcsolódó osztály hozzáadása az .app-hoz
+    <div className={`app ${theme}`}>
+      {/* ÁTADJUK A TÉMA ÁLLAPOTOT ÉS VÁLTÓT A NAVBAR-NAK */}
+      <Navbar 
+        route={route === "homepage" ? "homepage" : route} 
+        setRoute={setRoute} 
+        theme={theme} 
+        toggleTheme={toggleTheme} 
+      />
 
       <div className={`main-layout ${route === "homepage" ? "homepage" : ""}`}>
         {route === "homepage" ? (

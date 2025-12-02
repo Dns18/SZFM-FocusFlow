@@ -1,8 +1,10 @@
+/* src/App.css */
 .app { 
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #0b1020; /* 🌙 Teljes oldal háttérszíne */
+  background: var(--app-bg); /* 🌙 Teljes oldal háttérszíne */
+  transition: background 0.5s;
 }
 
 /* main layout: tartalom + timer (alapértelmezett: két oszlop) */
@@ -11,24 +13,26 @@
   grid-template-columns: 1fr 1fr; /* két egyenlő oszlop */
   gap: 24px;
   padding: 30px;
-  padding-top: 80px; /* hely a fix navbar miatt */
+  padding-top: 80px; /* Megadja a helyet a Navbar alatt */
   flex: 1;
-  background: transparent; /* háttér ne fedje a sötétkéket */
+  background: transparent;
 }
 
 /* Ha NEM homepage, ne legyen kétoszlopos layout (egy oszlopos, teljes szélességű content) */
 .main-layout:not(.homepage) {
   display: block;
   padding: 28px;
+  padding-top: 80px; /* Hozzáadva a hely a navbar alá, ha nem a homepage layout van */
 }
 
 /* Tartalom panel */
 .content-panel {
-  background: #111836; /* sötétebb kék doboz */
+  background: var(--panel-bg); /* Változó */
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  color: white;
+  box-shadow: 0 2px 8px var(--shadow-color); /* Változó */
+  color: var(--text-color-primary); /* Változó */
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 /* Ha main-layout nem homepage, a content-panel töltse ki a teljes szélességet és középre igazolt legyen */
@@ -41,15 +45,16 @@
 
 /* Timer panel */
 .timer-panel {
-  background: #111836; /* ugyanaz a sötét háttér mint a content panelnél */
+  background: var(--panel-bg); /* Változó */
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px var(--shadow-color); /* Változó */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-color-primary); /* Változó */
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 /* Chat panel: biztosítjuk, hogy a chat a bal oldali oszlopot teljesen kitöltse */
@@ -67,7 +72,11 @@
   .main-layout {
     grid-template-columns: 1fr;
     padding: 30px;
-    padding-top: 5rem;
+    padding-top: 80px; /* KONZISZTENS PADDING MOBILON IS */
+  }
+  
+  .main-layout:not(.homepage) {
+    padding-top: 80px; /* KONZISZTENS PADDING NON-HOMEPAGE MOBILON IS */
   }
 
   .content-panel,
