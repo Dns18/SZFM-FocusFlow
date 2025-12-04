@@ -44,7 +44,7 @@ export default function Content({ route }) {
 
   if (route === "dashboard") {
     return (
-      <section style={{ padding: 24, color: "white" }}>
+      <section style={{ padding: 24}}>
         <h1>Statisztikák</h1>
 
         {sessions.length === 0 ? (
@@ -75,7 +75,7 @@ export default function Content({ route }) {
             </table>
 
             <h3 style={{ marginTop: 20 }}>Részletes lista</h3>
-            <div style={{ maxHeight: 240, overflow: "auto", marginTop: 8, borderRadius: 8, background: "#0f1724", padding: 8 }}>
+            <div class="tablazat" style={{ maxHeight: 240, overflow: "auto", marginTop: 8, borderRadius: 8, padding: 8 }}>
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ textAlign: "left", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
