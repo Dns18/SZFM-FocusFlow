@@ -153,13 +153,9 @@
     gap: 10px;
     width: auto;
 }
-
 .right-side {
-    font-size: 13px;
-    color: var(--text-color-secondary); /* Változó */
-    width: auto;
+    display: inline-flex;
     align-items: right;
-}
-.right-side strong {
-    color: var(--text-color-primary); /* Változó */
+    gap: 10px;
+    margin-left: auto;
 }
