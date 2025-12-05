@@ -6,8 +6,10 @@ const STORAGE_KEY = "focusflow_sessions_v1";
 const DEFAULT_SESSION_DURATION = 25 * 60; // másodpercben (ha nincs duration a mentésben)
 
 function loadSessions() {
+  const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
+
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : [];
   } catch (e) {
     console.warn("Failed to load sessions", e);
