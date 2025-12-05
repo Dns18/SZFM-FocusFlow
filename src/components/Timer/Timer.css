@@ -297,3 +297,119 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/* Tippek gomb stílus – Hozzáad gomb színével */
+.tippek-btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    background: var(--btn-primary);
+}
+
+.tippek-btn:hover {
+    background: #0056b3; /* Hozzáad hover szín */
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.tippek-btn:active {
+    transform: scale(0.98);
+}
+
+.tippek-btn:hover:not(:disabled) {
+    background: #0056b3; /* Hozzáad hover szín */
+}
+
+/* --- Tippek modal overlay --- */
+.tips-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tips-modal-overlay.fade-in {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tips-modal-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Tippek modal doboz --- */
+.tips-modal {
+    background: var(--panel-bg);
+    color: var(--input-text);
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.tips-modal-overlay.fade-in .tips-modal {
+  transform: translateY(0);
+}
+
+.tips-modal-overlay.fade-out .tips-modal {
+  transform: translateY(-20px);
+}
+
+/* Címsor */
+.tips-modal h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--input-text); /* Hozzáad gomb színéhez igazítva */
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* --- Close gomb --- */
+.tips-modal .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--input-text); /* egyezik a belső szöveggel */
+}
+
+.tips-modal .close-btn:hover {
+  color: var(--btn-danger);
+}
+
+/* --- Tippek lista --- */
+.tips-modal ul {
+    padding-left: 20px;
+    margin-top: 10px;
+    color: var(--input-text); /* szín egyezik */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+}

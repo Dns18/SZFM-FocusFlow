@@ -11,20 +11,30 @@ const DEFAULT_FOCUS = 25 * 60;
 const DEFAULT_SHORT_BREAK = 5 * 60;
 const DEFAULT_LONG_BREAK = 15 * 60;
 
-function saveSessionToStorage(topic, durationSeconds) {
+function saveSessionToStorage(topic, durationSeconds, user) {
   if (!topic) return;
+
+  const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
+
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(key);
     const arr = raw ? JSON.parse(raw) : [];
     arr.push({ topic, timestamp: Date.now(), duration: durationSeconds });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-
-    // 🔔 fontos: ezzel szólunk a Profile-nak, hogy új session lett
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("focusSessionSaved"));
-    }
+    localStorage.setItem(key, JSON.stringify(arr));
   } catch (e) {
     console.warn("Saving session failed", e);
+  }
+}
+
+function loadSessions(user) {
+  const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
+
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.warn("Failed to load sessions", e);
+    return [];
   }
 }
 
@@ -46,7 +56,7 @@ function saveTopics(topics) {
   }
 }
 
-export default function Timer() {
+export default function Timer({ user }) {
   const [focusDuration, setFocusDuration] = useState(() => {
     const stored = parseInt(localStorage.getItem("focusDuration"));
     return !isNaN(stored) ? stored : DEFAULT_FOCUS;
@@ -60,10 +70,24 @@ export default function Timer() {
     return !isNaN(stored) ? stored : DEFAULT_LONG_BREAK;
   });
 
+  const [sessions, setSessions] = useState(() => loadSessions(user));
+
   const formatMinutesSeconds = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
+  };
+
+  const [showTips, setShowTips] = useState(false);
+  const [isTipsVisible, setIsTipsVisible] = useState(false);
+
+  useEffect(() => {
+    if (showTips) setIsTipsVisible(true);
+  }, [showTips]);
+
+  const closeTips = () => {
+    setIsTipsVisible(false);
+    setTimeout(() => setShowTips(false), 300); // animáció időtartama
   };
 
   const [time, setTime] = useState(focusDuration);
@@ -73,9 +97,8 @@ export default function Timer() {
 
   const [topics, setTopics] = useState(() => loadTopics());
   const [topic, setTopic] = useState(() => {
-    const t = loadTopics();
     const persisted = localStorage.getItem("selectedTopic");
-    return (persisted && persisted.trim()) || (t && t.length ? t[0] : "Matematika");
+    return (persisted && persisted.trim()) || ""; // üres = "-" az option-ban
   });
   const [newTopic, setNewTopic] = useState("");
 
@@ -132,7 +155,7 @@ export default function Timer() {
   const endTimer = () => {
     if (!isBreak && sessionStartRef.current) {
       const elapsedSec = Math.round((Date.now() - sessionStartRef.current) / 1000);
-      saveSessionToStorage(topic, elapsedSec > 0 ? elapsedSec : focusDuration);
+      saveSessionToStorage(topic, elapsedSec > 0 ? elapsedSec : focusDuration, user);
       sessionStartRef.current = null;
     }
     clearInterval(intervalRef.current);
@@ -287,6 +310,35 @@ export default function Timer() {
 
   return (
     <div className="timer-wrapper">
+      {/* --- Tippek gomb és animált modal --- */}
+      <div style={{ position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 1000 }}>
+        <button className="btn tippek-btn" onClick={() => setShowTips(true)}>
+          Tippek
+        </button>
+      </div>
+
+      {showTips && (
+        <div
+          className={`tips-modal-overlay ${isTipsVisible ? "fade-in" : "fade-out"}`}
+          onClick={closeTips}
+        >
+          <div className="tips-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Tanulási Tippek</h3>
+            <ul>
+              <li>Kapcsold ki a zavaró tényezőket: telefon, chat, értesítések szünetre.</li>
+              <li>Ne zavarjon semmi a fókusz idején.</li>
+              <li>Írd fel a legfontosabb pontokat minden session végén.</li>
+              <li>Rövid, kulcsszavas jegyzetek segítik az emlékezést.</li>
+              <li>Maradj hidratált.</li>
+              <li>Egy kis gyümölcs vagy snack segíti az agyműködést.</li>
+              <li>Mozogj a szünetben: pár perc séta vagy nyújtás felfrissít.</li>
+              <li>A nap végén nézd át, mennyit tanultál, és mit kell javítani.</li>
+            </ul>
+            <button className="close-btn" onClick={closeTips}>×</button>
+          </div>
+        </div>
+      )}
+
       <h2 className="focus-title">
         {isBreak ? (cycleCount >= 4 ? "HOSSZÚ SZÜNET" : "SZÜNET") : "FOCUS SESSIONS"}
       </h2>
@@ -304,6 +356,9 @@ export default function Timer() {
           }}
           disabled={isActive}
         >
+          {/* Alapértelmezett "----------" */}
+          <option value="" disabled>-</option>
+
           {topics.map((t) => (
             <option key={t} value={t}>
               {t}

@@ -69,7 +69,7 @@ export default function App() {
         {route === "homepage" ? (
           <>
             <div className="timer-panel">
-              <Timer />
+              <Timer user={user} />
             </div>
             <div className="chat-panel">
               <Chat />
@@ -97,7 +97,7 @@ export default function App() {
           </div>
         ) : (
           <div className="content-panel">
-            <Content route={route} />
+            <Content route={route} user={user} />
           </div>
         )}
       </div>

@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import Courses from "../Courses/Courses";
+import Statistics from '../Content/Statistics';
 
 const STORAGE_KEY = "focusflow_sessions_v1";
 const DEFAULT_SESSION_DURATION = 25 * 60; // másodpercben (ha nincs duration a mentésben)
@@ -14,7 +15,7 @@ function loadSessions() {
   }
 }
 
-export default function Content({ route }) {
+export default function Content({ route, user }) {
   const [sessions, setSessions] = useState(() => loadSessions());
 
   useEffect(() => {
@@ -103,6 +104,8 @@ export default function Content({ route }) {
                 </tbody>
               </table>
             </div>
+
+            <Statistics sessions={sessions} />
           </>
         )}
 
