@@ -54,4 +54,19 @@ export default function Statistics({ sessions }) {
     if (!sessions || sessions.length === 0) {
         return <p>Nincs még mentett session az adatokhoz.</p>;
     }
+
+    return (
+     <div style={{ padding: 24 }}>
+        <h2>Heti session szám tantárgyanként</h2>
+        <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={currentWeekSessions}>
+            <XAxis dataKey="topic" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" fill="#007bff" />
+            </BarChart>
+        </ResponsiveContainer>
+     </div>
+    );
 }
