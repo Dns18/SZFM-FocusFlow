@@ -112,20 +112,28 @@ export default function Navbar({ route, setRoute, theme, toggleTheme }) {
       
       {/* Működési leírás pop-up */}
       {showManual && (
-        <div className="popup-overlay" onClick={() => setShowManual(false)}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-popup" onClick={() => setShowManual(false)}>×</button>
+        <div 
+          className="manual-modal-overlay fade-in" 
+          onClick={() => setShowManual(false)}
+        >
+          <div 
+            className="manual-modal" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="close-btn" 
+              onClick={() => setShowManual(false)}
+            >
+              ×
+            </button>
             <h3>Működési leírás</h3>
-            <p>
-              Itt írd le, hogyan használható az app:
-              <ul>
-                <li>Válassz témát a Timer-ben</li>
-                <li>Kattints a Start gombra a Pomodoro indításához</li>
-                <li>A Tippek gombra kattintva extra tanulási tippeket láthatsz</li>
-                <li>Session-ök automatikusan mentődnek, ha be vagy jelentkezve</li>
-                <li>Analytics alatt megtekintheted a heti statisztikákat</li>
-              </ul>
-            </p>
+            <ul>
+              <li>Válassz témát a Timer-ben</li>
+              <li>Kattints a Start gombra a Pomodoro indításához</li>
+              <li>A Tippek gombra kattintva extra tanulási tippeket láthatsz</li>
+              <li>Session-ök automatikusan mentődnek, ha be vagy jelentkezve</li>
+              <li>Analytics alatt megtekintheted a heti statisztikákat</li>
+            </ul>
           </div>
         </div>
       )}
