@@ -67,6 +67,17 @@ export default function Statistics({ sessions }) {
             <Bar dataKey="count" fill="#007bff" />
             </BarChart>
         </ResponsiveContainer>
+
+        <h2 style={{ marginTop: 32 }}>Heti tanulás napi bontásban (perc)</h2>
+        <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={weekTimeByDay}>
+            <XAxis dataKey="day" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="minutes" fill="#28a745" />
+            </BarChart>
+        </ResponsiveContainer>
      </div>
     );
 }
