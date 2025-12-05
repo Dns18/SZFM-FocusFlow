@@ -11,15 +11,30 @@ const DEFAULT_FOCUS = 25 * 60;
 const DEFAULT_SHORT_BREAK = 5 * 60;
 const DEFAULT_LONG_BREAK = 15 * 60;
 
-function saveSessionToStorage(topic, durationSeconds) {
+function saveSessionToStorage(topic, durationSeconds, user) {
   if (!topic) return;
+
+  const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
+
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(key);
     const arr = raw ? JSON.parse(raw) : [];
     arr.push({ topic, timestamp: Date.now(), duration: durationSeconds });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    localStorage.setItem(key, JSON.stringify(arr));
   } catch (e) {
     console.warn("Saving session failed", e);
+  }
+}
+
+function loadSessions(user) {
+  const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
+
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    console.warn("Failed to load sessions", e);
+    return [];
   }
 }
 
@@ -41,7 +56,7 @@ function saveTopics(topics) {
   }
 }
 
-export default function Timer() {
+export default function Timer({ user }) {
   const [focusDuration, setFocusDuration] = useState(() => {
     const stored = parseInt(localStorage.getItem("focusDuration"));
     return !isNaN(stored) ? stored : DEFAULT_FOCUS;
@@ -54,6 +69,8 @@ export default function Timer() {
     const stored = parseInt(localStorage.getItem("longBreak"));
     return !isNaN(stored) ? stored : DEFAULT_LONG_BREAK;
   });
+
+  const [sessions, setSessions] = useState(() => loadSessions(user));
 
   const formatMinutesSeconds = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -138,7 +155,7 @@ export default function Timer() {
   const endTimer = () => {
     if (!isBreak && sessionStartRef.current) {
       const elapsedSec = Math.round((Date.now() - sessionStartRef.current) / 1000);
-      saveSessionToStorage(topic, elapsedSec > 0 ? elapsedSec : focusDuration);
+      saveSessionToStorage(topic, elapsedSec > 0 ? elapsedSec : focusDuration, user);
       sessionStartRef.current = null;
     }
     clearInterval(intervalRef.current);

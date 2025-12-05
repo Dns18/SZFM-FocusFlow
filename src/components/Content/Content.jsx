@@ -15,7 +15,7 @@ function loadSessions() {
   }
 }
 
-export default function Content({ route }) {
+export default function Content({ route, user }) {
   const [sessions, setSessions] = useState(() => loadSessions());
 
   useEffect(() => {
