@@ -14,6 +14,7 @@ export default function Navbar({ route, setRoute, theme, toggleTheme }) {
   ];
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [showManual, setShowManual] = useState(false);
 
   React.useEffect(() => {
     // Animáció csak akkor, amikor a hamburger ikon eltűnik (desktop nézet)
@@ -67,6 +68,15 @@ export default function Navbar({ route, setRoute, theme, toggleTheme }) {
             {l.label}
           </button>
         ))}
+
+        {/* Működési leírás gomb */}
+        <button 
+          className="manual-btn" 
+          onClick={() => setShowManual(true)}
+        >
+          ❔
+        </button>
+
         {/* TÉMA VÁLTÓ GOMB DESKTOPON */}
         <ThemeToggleButton /> 
       </nav>
@@ -92,8 +102,35 @@ export default function Navbar({ route, setRoute, theme, toggleTheme }) {
               {l.label}
             </button>
           ))}
+
+          {/* Működési leírás gomb mobilon */}
+          <button 
+            className="manual-btn" 
+            onClick={() => { setShowManual(true); setMenuOpen(false); }}
+          >
+            ❔
+          </button>
         </nav>
       </div>
+
+      {/* Működési leírás pop-up */}
+      {showManual && (
+        <div className="manual-popup">
+          <button className="close-btn" onClick={() => setShowManual(false)}>×</button>
+          <h3>Működési leírás</h3>
+          <p>
+            Itt írd le, hogyan használható az app:
+            <ul>
+              <li>Válassz témát a Timer-ben</li>
+              <li>Kattints a Start gombra a Pomodoro indításához</li>
+              <li>A Tippek gombra kattintva extra tanulási tippeket láthatsz</li>
+              <li>Session-ök automatikusan mentődnek, ha be vagy jelentkezve</li>
+              <li>Analytics alatt megtekintheted a heti statisztikákat</li>
+            </ul>
+          </p>
+        </div>
+      )}
+
     </header>
   );
 }
