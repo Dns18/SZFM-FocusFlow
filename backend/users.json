@@ -19,5 +19,12 @@
     "name": "eddie",
     "password": "$2b$10$x/PkWk6DTXBziCrsUhEm4uDwgeHpCanAlB6qCzZJMS65taZVaLiPC",
     "createdAt": "2025-12-05T20:56:45.767Z"
+  },
+  {
+    "id": 1764977464628,
+    "email": "kisspeter01345@gmail.com",
+    "name": "asdasd",
+    "password": "$2b$10$UZPQ6Vkyi/hJP5Rd9D0r0utFlTvCJy6Vc/76a43ZAdVxuK5zACUZ2",
+    "createdAt": "2025-12-05T23:31:04.628Z"
   }
 ]
