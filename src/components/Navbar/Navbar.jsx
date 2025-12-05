@@ -55,82 +55,80 @@ export default function Navbar({ route, setRoute, theme, toggleTheme }) {
   );
 
   return (
-    <header className={`navbar${loaded ? " loaded" : ""}`}>
-      <div className="logo">FocusFlow</div>
-      
-      <nav className="nav-links">
-        {links.map((l) => (
-          <button
-            key={l.id}
-            className={`nav-item ${route === l.id ? "active" : ""}`}
-            onClick={() => setRoute(l.id)}
-          >
-            {l.label}
-          </button>
-        ))}
-
-        {/* Működési leírás gomb */}
-        <button 
-          className="manual-btn" 
-          onClick={() => setShowManual(true)}
-        >
-          ❔
-        </button>
-
-        {/* TÉMA VÁLTÓ GOMB DESKTOPON */}
-        <ThemeToggleButton /> 
-      </nav>
-      
-      <button className="hamburger-btn" onClick={() => setMenuOpen(true)}>
-        <FontAwesomeIcon icon={faBars} size="lg" />
-      </button>
-      
-      <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
-        <button className="close-btn" onClick={() => setMenuOpen(false)}>
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </button>
+    <>
+      <header className={`navbar${loaded ? " loaded" : ""}`}>
+        <div className="logo">FocusFlow</div>
         
-        {/* TÉMA VÁLTÓ GOMB MOBILON (a mobil menüben) */}
-        <nav className="mobile-nav-links">
-          <ThemeToggleButton isMobile={true} />
+        <nav className="nav-links">
+          {/* Működési leírás gomb - a kezdőlap elé */}
+          <button className="manual-btn" onClick={() => setShowManual(true)}>?</button>
+
           {links.map((l) => (
             <button
               key={l.id}
               className={`nav-item ${route === l.id ? "active" : ""}`}
-              onClick={() => { setRoute(l.id); setMenuOpen(false); }}
+              onClick={() => setRoute(l.id)}
             >
               {l.label}
             </button>
           ))}
 
-          {/* Működési leírás gomb mobilon */}
-          <button 
-            className="manual-btn" 
-            onClick={() => { setShowManual(true); setMenuOpen(false); }}
-          >
-            ❔
-          </button>
+          {/* TÉMA VÁLTÓ GOMB DESKTOPON */}
+          <ThemeToggleButton /> 
         </nav>
-      </div>
+        
+        <button className="hamburger-btn" onClick={() => setMenuOpen(true)}>
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </button>
+        
+        <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
+          <button className="close-btn" onClick={() => setMenuOpen(false)}>
+            <FontAwesomeIcon icon={faTimes} size="lg" />
+          </button>
+          
+          {/* TÉMA VÁLTÓ GOMB MOBILON (a mobil menüben) */}
+          <nav className="mobile-nav-links">
+            <ThemeToggleButton isMobile={true} />
+            {links.map((l) => (
+              <button
+                key={l.id}
+                className={`nav-item ${route === l.id ? "active" : ""}`}
+                onClick={() => { setRoute(l.id); setMenuOpen(false); }}
+              >
+                {l.label}
+              </button>
+            ))}
 
+            {/* Működési leírás gomb mobilon */}
+            <button 
+              className="manual-btn" 
+              onClick={() => { setShowManual(true); setMenuOpen(false); }}
+            >
+              ❔
+            </button>
+          </nav>
+        </div>
+      </header>
+      
       {/* Működési leírás pop-up */}
       {showManual && (
-        <div className="manual-popup">
-          <button className="close-btn" onClick={() => setShowManual(false)}>×</button>
-          <h3>Működési leírás</h3>
-          <p>
-            Itt írd le, hogyan használható az app:
-            <ul>
-              <li>Válassz témát a Timer-ben</li>
-              <li>Kattints a Start gombra a Pomodoro indításához</li>
-              <li>A Tippek gombra kattintva extra tanulási tippeket láthatsz</li>
-              <li>Session-ök automatikusan mentődnek, ha be vagy jelentkezve</li>
-              <li>Analytics alatt megtekintheted a heti statisztikákat</li>
-            </ul>
-          </p>
+        <div className="popup-overlay" onClick={() => setShowManual(false)}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-popup" onClick={() => setShowManual(false)}>×</button>
+            <h3>Működési leírás</h3>
+            <p>
+              Itt írd le, hogyan használható az app:
+              <ul>
+                <li>Válassz témát a Timer-ben</li>
+                <li>Kattints a Start gombra a Pomodoro indításához</li>
+                <li>A Tippek gombra kattintva extra tanulási tippeket láthatsz</li>
+                <li>Session-ök automatikusan mentődnek, ha be vagy jelentkezve</li>
+                <li>Analytics alatt megtekintheted a heti statisztikákat</li>
+              </ul>
+            </p>
+          </div>
         </div>
       )}
-
-    </header>
+    </>
   );
 }

@@ -167,3 +167,54 @@
     display: block;
   }
 }
+
+/* Működési leírás gomb */
+.manual-btn {
+  background-color: white; /* fehér kör */
+  color: black; /* fekete kérdőjel */
+  border: none;
+  border-radius: 50%; /* kör alak */
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 8px; /* kis távolság a Kezdőlap-tól */
+}
+
+.manual-btn:hover {
+  opacity: 0.8;
+}
+
+.manual-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: scale(0.95);
+}
+
+/* Pop-up ablak */
+.manual-popup {
+  position: fixed;        /* rögzítve az ablakhoz */
+  top: 50%;               /* függőleges közép */
+  left: 50%;              /* vízszintes közép */
+  transform: translate(-50%, -50%); /* pontosan középre */
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+  max-width: 400px;
+  z-index: 10000;
+}
+
+.manual-popup .close-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
