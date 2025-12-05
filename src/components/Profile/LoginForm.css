@@ -1,0 +1,133 @@
+/* src/components/Profile/LoginForm.css */
+/* Konténer */
+.auth-form {
+  background: var(--panel-bg);
+  border: 1px solid var(--input-border);
+  padding: 18px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  color: var(--text-color-primary);
+  box-shadow: 0 6px 18px var(--shadow-color);
+  margin: 0 auto;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+/* Fejléc */
+.auth-form h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  color: var(--text-color-primary);
+}
+
+/* Hibajelzés */
+.auth-form .error {
+  background: rgba(127, 29, 29, 0.12);
+  color: #fecaca;
+  border: 1px solid rgba(127, 29, 29, 0.22);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.light-mode .auth-form .error {
+  color: #881c1c;
+}
+
+/* Label */
+.auth-form label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+  margin-top: 10px;
+  margin-bottom: 6px;
+  transition: color 0.5s;
+}
+
+/* Inputok */
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--input-text);
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  outline: none;
+  transition: box-shadow .12s ease, border-color .12s ease, background 0.5s, color 0.5s;
+}
+
+/* Fókusz állapot */
+.auth-form input:focus {
+  border-color: var(--btn-primary);
+  box-shadow: 0 0 0 1px var(--btn-primary), 0 6px 18px var(--shadow-color);
+}
+
+/* Primér gomb (Bejelentkezés) */
+.auth-form button[type="submit"],
+.auth-action-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: var(--btn-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.98rem;
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease, background 0.5s;
+  box-shadow: 0 8px 20px rgba(11, 125, 240, 0.16);
+}
+.light-mode .auth-form button[type="submit"],
+.light-mode .auth-action-btn {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover / active */
+.auth-form button[type="submit"]:hover,
+.auth-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px var(--shadow-color);
+}
+.auth-form button[type="submit"]:active,
+.auth-action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px var(--shadow-color);
+}
+
+/* Letiltott állapot */
+.auth-form button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Másodlagos gomb (pl. link jellegű) */
+.auth-form .secondary {
+  margin-top: 10px;
+  background: transparent;
+  color: var(--link-color);
+  width: auto;
+  padding: 8px 10px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* Reszponzív */
+@media (max-width: 640px) {
+  .auth-form {
+    padding: 14px;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+  .auth-form h3 {
+    font-size: 1rem;
+  }
+}
