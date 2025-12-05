@@ -61,6 +61,18 @@ export default function Timer() {
     return `${m}:${s}`;
   };
 
+  const [showTips, setShowTips] = useState(false);
+  const [isTipsVisible, setIsTipsVisible] = useState(false);
+
+  useEffect(() => {
+    if (showTips) setIsTipsVisible(true);
+  }, [showTips]);
+
+  const closeTips = () => {
+    setIsTipsVisible(false);
+    setTimeout(() => setShowTips(false), 300); // animáció időtartama
+  };
+
   const [time, setTime] = useState(focusDuration);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
@@ -284,6 +296,35 @@ export default function Timer() {
 
   return (
     <div className="timer-wrapper">
+      {/* --- Tippek gomb és animált modal --- */}
+      <div style={{ position: "absolute", top: 10, left: "50%", transform: "translateX(-50%)", zIndex: 1000 }}>
+        <button className="btn tippek-btn" onClick={() => setShowTips(true)}>
+          Tippek
+        </button>
+      </div>
+
+      {showTips && (
+        <div
+          className={`tips-modal-overlay ${isTipsVisible ? "fade-in" : "fade-out"}`}
+          onClick={closeTips}
+        >
+          <div className="tips-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Tanulási Tippek</h3>
+            <ul>
+              <li>Kapcsold ki a zavaró tényezőket: telefon, chat, értesítések szünetre.</li>
+              <li>Ne zavarjon semmi a fókusz idején.</li>
+              <li>Írd fel a legfontosabb pontokat minden session végén.</li>
+              <li>Rövid, kulcsszavas jegyzetek segítik az emlékezést.</li>
+              <li>Maradj hidratált.</li>
+              <li>Egy kis gyümölcs vagy snack segíti az agyműködést.</li>
+              <li>Mozogj a szünetben: pár perc séta vagy nyújtás felfrissít.</li>
+              <li>A nap végén nézd át, mennyit tanultál, és mit kell javítani.</li>
+            </ul>
+            <button className="close-btn" onClick={closeTips}>×</button>
+          </div>
+        </div>
+      )}
+
       <h2 className="focus-title">
         {isBreak ? (cycleCount >= 4 ? "HOSSZÚ SZÜNET" : "SZÜNET") : "FOCUS SESSIONS"}
       </h2>
