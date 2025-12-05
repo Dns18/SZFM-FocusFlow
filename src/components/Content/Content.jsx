@@ -5,7 +5,7 @@ import Statistics from '../Content/Statistics';
 const STORAGE_KEY = "focusflow_sessions_v1";
 const DEFAULT_SESSION_DURATION = 25 * 60; // másodpercben (ha nincs duration a mentésben)
 
-function loadSessions() {
+function loadSessions(user) {
   const key = user ? `focusflow_sessions_v1_${user.id}` : "focusflow_sessions_v1_guest";
 
   try {
