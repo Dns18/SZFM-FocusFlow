@@ -6,7 +6,7 @@ const DEFAULT_SESSION_DURATION = 25 * 60;
 
 export default function Statistics({ sessions }) {
     // --- Heti tantárgy session szám ---
-  const currentWeekSessions = useMemo(() => {
+    const currentWeekSessions = useMemo(() => {
     const now = new Date();
     const weekStart = startOfWeek(now, { weekStartsOn: 1 });
     const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
@@ -22,10 +22,10 @@ export default function Statistics({ sessions }) {
     });
 
     return Object.entries(counts).map(([topic, count]) => ({ topic, count }));
-  }, [sessions]);
+    }, [sessions]);
 
   // --- Heti napi tanulási idő (percekben) ---
-  const weekTimeByDay = useMemo(() => {
+    const weekTimeByDay = useMemo(() => {
     const now = new Date();
     const weekStart = startOfWeek(now, { weekStartsOn: 1 });
     const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
@@ -48,5 +48,10 @@ export default function Statistics({ sessions }) {
     });
 
     return Object.entries(timeByDay).map(([day, minutes]) => ({ day, minutes }));
-  }, [sessions]);
+    }, [sessions]);
+
+  // --- Ha nincs session ---
+    if (!sessions || sessions.length === 0) {
+        return <p>Nincs még mentett session az adatokhoz.</p>;
+    }
 }
