@@ -80,9 +80,8 @@ export default function Timer() {
 
   const [topics, setTopics] = useState(() => loadTopics());
   const [topic, setTopic] = useState(() => {
-    const t = loadTopics();
     const persisted = localStorage.getItem("selectedTopic");
-    return (persisted && persisted.trim()) || (t && t.length ? t[0] : "Matematika");
+    return (persisted && persisted.trim()) || ""; // üres = "-" az option-ban
   });
   const [newTopic, setNewTopic] = useState("");
 
@@ -342,6 +341,9 @@ export default function Timer() {
           }}
           disabled={isActive}
         >
+          {/* Alapértelmezett "----------" */}
+          <option value="" disabled>-</option>
+
           {topics.map((t) => (
             <option key={t} value={t}>
               {t}
