@@ -18,6 +18,11 @@ function saveSessionToStorage(topic, durationSeconds) {
     const arr = raw ? JSON.parse(raw) : [];
     arr.push({ topic, timestamp: Date.now(), duration: durationSeconds });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+
+    // 🔔 fontos: ezzel szólunk a Profile-nak, hogy új session lett
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("focusSessionSaved"));
+    }
   } catch (e) {
     console.warn("Saving session failed", e);
   }
@@ -214,7 +219,7 @@ export default function Timer() {
 
   // --- topic kezelő funkciók ---
   const handleAddTopic = () => {
-    if (isActive) return; // blokkoljuk ha fut a timer
+    if (isActive) return;
     const trimmed = newTopic.trim();
     if (!trimmed) return;
 
@@ -238,7 +243,7 @@ export default function Timer() {
   };
 
   const handleRemoveTopic = (t) => {
-    if (isActive) return; // blokkoljuk ha fut a timer
+    if (isActive) return;
     const confirmed = window.confirm(`Törlöd a témát: "${t}" ? (a korábbi sessionök megmaradnak)`);
     if (!confirmed) return;
     const updated = topics.filter((x) => x !== t);
@@ -251,8 +256,6 @@ export default function Timer() {
       window.dispatchEvent(new CustomEvent("topicChange", { detail: newTopic }));
     }
   };
-
-  // ------ ÚJ: helper függvények a 3 inputhoz (ugyanaz a logika, mint eddig) ------
 
   const setFocusMinutes = (minutes) => {
     if (!isNaN(minutes) && minutes > 0) {
@@ -358,7 +361,6 @@ export default function Timer() {
         <div className="time-text">{formatTime(time)}</div>
       </div>
 
-      {/* ----------- ITT VANNAK AZ ÚJ, EGYFORMA DESIGN-Ú INPUTOK ----------- */}
       <div className="timer-settings">
         {/* FOCUS */}
         <div className="timer-setting">

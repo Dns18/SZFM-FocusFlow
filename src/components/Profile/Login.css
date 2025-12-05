@@ -1,151 +1,5 @@
 /* src/components/Profile/Login.css */
-/* Konténer */
-.auth-form {
-  /* Változók használata: panel háttér és árnyék */
-  background: var(--panel-bg);
-  border: 1px solid var(--input-border);
-  padding: 18px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 420px;
-  box-sizing: border-box;
-  color: var(--text-color-primary); /* Változó */
-  box-shadow: 0 6px 18px var(--shadow-color); /* Változó */
-  margin: 0 auto;
-  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
-}
 
-/* Fejléc */
-.auth-form h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.1rem;
-  color: var(--text-color-primary); /* Változó */
-}
-
-/* Hibajelzés */
-.auth-form .error {
-  /* Hibajelzés színe: fix piros marad, de a hátteret a téma is befolyásolhatja */
-  background: rgba(127, 29, 29, 0.12);
-  color: #fecaca; /* Világos szöveg */
-  border: 1px solid rgba(127,29,29,0.22);
-  padding: 8px 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 0.95rem;
-}
-.light-mode .auth-form .error {
-  /* Fekete/sötét szöveg világos módban a piroson */
-  color: #881c1c;
-}
-
-/* Label */
-.auth-form label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-color-secondary); /* Változó */
-  margin-top: 10px;
-  margin-bottom: 6px;
-  transition: color 0.5s;
-}
-
-/* Inputok */
-.auth-form input[type="email"],
-.auth-form input[type="password"],
-.auth-form input[type="text"] {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--input-border); /* VÁLTOZÓ HASZNÁLAT */
-  background: var(--input-bg); /* Változó */
-  color: var(--input-text); /* Változó */
-  box-sizing: border-box;
-  font-size: 0.95rem;
-  outline: none;
-  transition: box-shadow .12s ease, border-color .12s ease, background 0.5s, color 0.5s;
-}
-
-/* FÓKUSZ ÁLLAPOT JAVÍTÁSA: Ezt kellett felülírni */
-.auth-form input:focus {
-  border-color: var(--btn-primary); /* Fókusz keret (kék) */
-  box-shadow: 0 0 0 1px var(--btn-primary), 0 6px 18px var(--shadow-color); /* Kék gyűrű + árnyék */
-}
-
-/* Primér gomb (Login / Regisztráció) - egységes kék stílus */
-.auth-form button[type="submit"],
-.auth-action-btn {
-  margin-top: 14px;
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: var(--btn-primary); /* Változó */
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.98rem;
-  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease, background 0.5s;
-  box-shadow: 0 8px 20px rgba(11,125,240,0.16);
-}
-.light-mode .auth-form button[type="submit"],
-.light-mode .auth-action-btn {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Világosabb árnyék light módban */
-}
-
-/* Hover / active */
-.auth-form button[type="submit"]:hover,
-.auth-action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 28px var(--shadow-color);
-}
-.auth-form button[type="submit"]:active,
-.auth-action-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 14px var(--shadow-color);
-}
-
-/* Letiltott állapot */
-.auth-form button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Másodlagos gomb (pl. link jellegű) */
-.auth-form .secondary {
-  margin-top: 10px;
-  background: transparent;
-  color: var(--link-color); /* Változó */
-  width: auto;
-  padding: 8px 10px;
-  border-radius: 8px;
-  box-shadow: none;
-}
-
-/* Footer segédszöveg */
-.auth-form .auth-footer {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: var(--text-color-secondary); /* Változó */
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  align-items: center;
-  transition: color 0.5s;
-}
-
-/* Reszponzív: kisebb képernyőn a form kisebb margóval */
-@media (max-width: 640px) {
-  .auth-form {
-    padding: 14px;
-    border-radius: 10px;
-    max-width: 100%;
-  }
-  .auth-form h3 {
-    font-size: 1rem;
-  }
-}
 /* auth-footer: sor és gomb stílus az auth nézet alján */
 .auth-footer {
   margin-top: 14px;
@@ -153,19 +7,19 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: var(--text-color-secondary); /* Változó */
+  color: var(--text-color-secondary);
   font-size: 0.95rem;
   line-height: 1;
 }
 
 .auth-footer .info-text {
-  color: var(--text-color-secondary); /* Változó */
+  color: var(--text-color-secondary);
   opacity: 0.95;
 }
 
 /* kék regisztráció gomb */
 .auth-footer .register-btn {
-  background: var(--btn-primary); /* Változó */
+  background: var(--btn-primary);
   color: #fff;
   border: none;
   padding: 8px 12px;
@@ -194,11 +48,12 @@
     gap: 8px;
   }
 }
+
 /* auth-footer kiegészítés: Bejelentkezés gomb stílusa */
 .auth-footer .login-btn {
   background: transparent;
-  color: var(--link-color); /* Változó */
-  border: 1px solid var(--input-border); /* Változó */
+  color: var(--link-color);
+  border: 1px solid var(--input-border);
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -207,39 +62,436 @@
   transition: transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color 0.5s;
 }
 
-/* Hover: light módban is működjön a gomb */
 .auth-footer .login-btn:hover {
-  background: transparent; /* Eltávolítva az RGB kísérlet */
+  background: transparent;
   color: var(--btn-primary);
   transform: translateY(-2px);
   box-shadow: 0 10px 26px var(--shadow-color);
 }
-/* Active állapot */
+
 .auth-footer .login-btn:active {
   transform: translateY(0);
   box-shadow: 0 6px 14px var(--shadow-color);
 }
 
-/* Mobil: ugyanaz, függőleges elrendezés kezelve fent */
-@media (max-width: 520px){
-  .auth-footer .login-btn {
-    width: 100%;
-  }
-}
-/* Profile/auth-home kiegészítés */
-.profile button {
-    background: var(--btn-danger);
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 16px;
-    transition: background 0.5s;
-}
+/* Eredeti profil gomb + szöveg */
 .profile p {
-    color: var(--text-color-primary); /* Változó */
-    margin-bottom: 8px;
-    transition: color 0.5s;
+  color: var(--text-color-primary);
+  margin-bottom: 8px;
+  transition: color 0.5s;
+}
+
+/* === PROFIL + AVATAR + XP KÁRTYA + KITŰZŐK === */
+
+.profile {
+  background: var(--panel-bg);
+  border: 1px solid var(--input-border);
+  padding: 18px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  color: var(--text-color-primary);
+  box-shadow: 0 6px 18px var(--shadow-color);
+  margin: 0 auto;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+  text-align: center;
+}
+
+/* Fejléc + szint pill */
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.profile-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-color-primary);
+}
+
+.level-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #38bdf8, #a855f7);
+  color: #0f172a;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+
+/* Avatar + profilkép */
+
+.profile-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar-frame {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+}
+
+/* Keret színek szint szerint */
+.avatar-frame.bronze {
+  border: 3px solid #b45309;
+  box-shadow: 0 0 16px rgba(180, 83, 9, 0.55);
+}
+
+.avatar-frame.silver {
+  border: 3px solid #9ca3af;
+  box-shadow: 0 0 16px rgba(156, 163, 175, 0.55);
+}
+
+.avatar-frame.gold {
+  border: 3px solid #eab308;
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.7);
+}
+
+.avatar-frame.diamond {
+  border: 3px solid #95e7fa;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Profilkép feltöltés gomb */
+
+.upload-btn {
+  display: inline-block;
+  background: var(--btn-primary);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+  transition: transform 0.08s ease, box-shadow 0.12s ease, background 0.5s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px var(--shadow-color);
+}
+
+.upload-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px var(--shadow-color);
+}
+
+.upload-btn input {
+  display: none;
+}
+
+/* Profil alapadatok */
+
+.profile-info p {
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+
+/* XP kártya */
+
+.xp-card {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: radial-gradient(
+      circle at top,
+      rgba(59, 130, 246, 0.22),
+      transparent 60%
+    ),
+    var(--panel-bg);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-card h4 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text-color-primary);
+}
+
+.xp-line {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color-secondary);
+}
+
+.xp-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #a3e635);
+  color: #052e16;
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+}
+
+.xp-total {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-color-primary);
+}
+
+.xp-total strong {
+  color: #22c55e;
+}
+
+.level-progress-text {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+}
+
+/* Napi XP progress bar */
+
+.xp-bar {
+  margin-top: 10px;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.25);
+  overflow: hidden;
+  position: relative;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22c55e, #a3e635);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.55);
+  transition: width 0.35s ease-out;
+}
+
+.xp-bar-label {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary);
+}
+
+/* Kitűzők kártya */
+
+.badges-card {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--input-border);
+  box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+.badges-card h4 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: var(--text-color-primary);
+}
+
+.no-badges {
+  font-size: 0.85rem;
+  color: var(--text-color-secondary);
+}
+
+/* Kitűzők listája – ikon + cím + tooltip hoverre */
+.badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+  justify-content: center;
+}
+
+.badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  cursor: default;
+}
+
+.light-mode .badge {
+  background: rgba(248, 250, 252, 0.95);
+}
+
+.badge-icon {
+  font-size: 1rem;
+}
+
+.badge-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.light-mode .badge-label {
+  color: #0f172a;
+}
+
+/* Tooltip – csak hoverre jelenjen meg */
+.badge-tooltip {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 220px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  z-index: 20;
+}
+
+.light-mode .badge-tooltip {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Tooltip kis nyíl */
+.badge-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+}
+
+.light-mode .badge-tooltip::after {
+  border-color: #0f172a transparent transparent transparent;
+}
+
+/* Hover állapot – mutasd a tooltipet */
+.badge:hover .badge-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -4px);
+}
+
+/* Kijelentkezés gomb */
+
+.logout-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.96rem;
+  background: var(--btn-danger);
+  color: #fff;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease, background 0.5s;
+}
+
+.logout-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px var(--shadow-color);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px var(--shadow-color);
+}
+
+/* 👇 overall / lifetime XP kártya */
+.lifetime-xp-card {
+  margin-top: 18px;
+  background: var(--panel-bg);
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  text-align: center;
+  color: var(--text-color-primary);
+  box-shadow: 0 6px 18px var(--shadow-color);
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+
+.lifetime-xp-card h4 {
+  margin-bottom: 10px;
+}
+
+.lifetime-x {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.lifetime-xp {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.lifetime-xp strong {
+  color: #22c55e;
+}
+
+.lifetime-desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+/* === LEVEL PILL SZÍNEK A SZINT ALAPJÁN === */
+.level-pill.bronze {
+  background: linear-gradient(90deg, #b45309, #d97706);
+  color: #fff7ed;
+  box-shadow: 0 0 10px rgba(180, 83, 9, 0.45);
+}
+
+.level-pill.silver {
+  background: linear-gradient(90deg, #9ca3af, #d1d5db);
+  color: #1e293b;
+  box-shadow: 0 0 10px rgba(156, 163, 175, 0.55);
+}
+
+.level-pill.gold {
+  background: linear-gradient(90deg, #eab308, #facc15);
+  color: #1f1300;
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.7);
+}
+
+.level-pill.diamond {
+  background: linear-gradient(90deg, #95e7fa, #5eead4);
+  color: #0e1b17;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.8);
 }
