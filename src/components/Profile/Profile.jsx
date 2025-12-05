@@ -116,7 +116,7 @@ export default function Profile({ user, onLogout, onLogin, setRoute }) {
     reader.readAsDataURL(file);
   };
 
-  // XP újraszámolása
+  // 🔧 XP újraszámolása – itt lett módosítás
   const recalcXp = () => {
     if (typeof window === "undefined") return;
 
@@ -128,12 +128,29 @@ export default function Profile({ user, onLogout, onLogin, setRoute }) {
         today.getDate()
       ).getTime();
 
-      const raw = localStorage.getItem(STORAGE_KEY);
+      // Itt döntjük el, melyik kulcsról olvasunk:
+      // 1) bejelentkezett userhez tartozó kulcs
+      // 2) guest kulcs
+      // 3) fallback: a régi, közös STORAGE_KEY
+      const keysToTry = [];
+
+      if (user && user.id) {
+        keysToTry.push(`${STORAGE_KEY}_${user.id}`);
+      } else {
+        keysToTry.push(`${STORAGE_KEY}_guest`);
+      }
+      // fallback mindig a végére
+      keysToTry.push(STORAGE_KEY);
+
       let totalSecondsAll = 0;
       let totalSecondsToday = 0;
 
-      if (raw) {
+      for (const key of keysToTry) {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+
         const sessions = JSON.parse(raw);
+        if (!Array.isArray(sessions)) continue;
 
         totalSecondsAll = sessions.reduce(
           (sum, s) => sum + (s.duration || 0),
@@ -143,6 +160,9 @@ export default function Profile({ user, onLogout, onLogin, setRoute }) {
         totalSecondsToday = sessions
           .filter((s) => s.timestamp >= startOfDay)
           .reduce((sum, s) => sum + (s.duration || 0), 0);
+
+        // ha találtunk értelmes listát, nem kell tovább próbálkozni
+        break;
       }
 
       // Lifetime percek (csak tanulás)
@@ -201,7 +221,7 @@ export default function Profile({ user, onLogout, onLogin, setRoute }) {
     return () => {
       window.removeEventListener("focusSessionSaved", handler);
     };
-  }, [user]);
+  }, [user]); // eslint be fog szólni a recalcXp-re, de ez így jó
 
   // Avatar keret szín szint alapján
   const avatarFrameClass = (() => {
